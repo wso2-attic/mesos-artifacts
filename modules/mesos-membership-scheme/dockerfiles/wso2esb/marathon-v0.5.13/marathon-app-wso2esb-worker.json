@@ -1,0 +1,52 @@
+{
+    "id": "/product/service/wso2esb-worker",
+    "cpus": 0.5,
+    "mem": 700.0,
+    "ports": [
+        4000, 9763, 9443, 8280, 8243
+    ],
+    "requirePorts": false,
+    "instances": 1,
+    "executor": "",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wso2esb-worker:4.9.0",
+            "network": "BRIDGE",
+            "privileged": false,
+            "parameters": [
+             
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/mnt/mesos-artifacts/esb",
+                "hostPath": "/mnt/mesos-artifacts/esb",
+                "mode": "RW"
+            }
+        ]
+    },
+    "env": {
+        
+    },
+    "constraints": [
+        
+    ],
+    "labels": {
+        "environment": "dev"
+    },
+    "fetch": [
+       
+    ],
+    "dependencies": [],
+    "healthChecks": [
+        
+    ],
+    "backoffSeconds": 1,
+    "backoffFactor": 1.15,
+    "maxLaunchDelaySeconds": 3600,
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0.5,
+        "maximumOverCapacity": 0.2
+    }
+}

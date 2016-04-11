@@ -1,0 +1,56 @@
+{
+    "id": "/product/service/wso2esb-manager",
+    "cpus": 0.5,
+    "mem": 700.0,
+    "portDefinitions": [
+        { "port": 0, "protocol": "tcp", "name": "hazelcast" },
+        { "port": 0, "protocol": "tcp", "name": "http" },
+        { "port": 0, "protocol": "tcp", "name": "https" },
+        { "port": 0, "protocol": "tcp", "name": "synapse" },
+        { "port": 0, "protocol": "tcp", "name": "synapse-https" }
+    ],
+    "requirePorts": false,
+    "instances": 1,
+    "executor": "",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wso2esb-manager:4.9.0",
+            "network": "HOST",
+            "privileged": false,
+            "parameters": [
+             
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/mnt/mesos-artifacts/esb",
+                "hostPath": "/mnt/mesos-artifacts/esb",
+                "mode": "RW"
+            }
+        ]
+    },
+    "env": {
+        
+    },
+    "constraints": [
+       
+    ],
+    "labels": {
+        "environment": "dev"
+    },
+    "fetch": [
+       
+    ],
+    "dependencies": [],
+    "healthChecks": [
+        
+    ],
+    "backoffSeconds": 1,
+    "backoffFactor": 1.15,
+    "maxLaunchDelaySeconds": 3600,
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0.5,
+        "maximumOverCapacity": 0.2
+    }
+}
