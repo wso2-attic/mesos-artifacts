@@ -16,34 +16,23 @@
 
 # ------------------------------------------------------------------------
 
-FROM ubuntu:latest
+FROM wso2esb:4.9.0
 MAINTAINER dev@wso2.org
-
-ENV DEBIAN_FRONTEND noninteractive
-
-# Build time arguments
-ARG WSO2_SERVER
-ARG WSO2_SERVER_VERSION
-ARG WSO2_SERVER_PROFILE
-ARG WSO2_ENVIRONMENT
-ARG HTTP_PACK_SERVER
-
-# Carbon server information
-ENV WSO2_SERVER=${WSO2_SERVER:-wso2esb} \
-    WSO2_SERVER_VERSION=${WSO2_SERVER_VERSION:-4.9.0} \
-    WSO2_SERVER_PROFILE=${WSO2_SERVER_PROFILE:-default} \
-    WSO2_ENVIRONMENT=${WSO2_ENVIRONMENT:-dev} \
-    HTTP_PACK_SERVER=${HTTP_PACK_SERVER}
-
-COPY scripts/*.sh* /usr/local/bin/
-
-# Execute configuration script
-RUN bash /usr/local/bin/image-config.sh
-
 USER wso2user
-WORKDIR /mnt
+# Override startup scripts. Need to replace localMemberPort with dynamic Hazelcast proxy port
+COPY scripts/wso2esb-manager-init.sh /usr/local/bin/
+COPY scripts/wso2esb-worker-init.sh /usr/local/bin/
+COPY artifacts/configs/bin/wso2server.sh /mnt/wso2esb-4.9.0/bin/
 
-# Expose transport ports
-EXPOSE 8280 8243 9763 9443
+# Add kernel patch to support custom membership schemes
+COPY artifacts/patches/ /mnt/wso2esb-4.9.0/repository/components/patches
 
-ENTRYPOINT /usr/local/bin/init.sh
+# Configure axis2.xml to enable Mesos clustering scheme
+COPY artifacts/configs/repository/conf/axis2/axis2.xml /mnt/wso2esb-4.9.0/repository/conf/axis2/
+COPY artifacts/configs/repository/components/dropins/mesos-membership-scheme-1.0.0-SNAPSHOT.jar /mnt/wso2esb-4.9.0/repository/components/dropins
+
+# Copy Synapse artifacts
+COPY artifacts/configs/repository/deployment/server/synapse-configs /mnt/wso2esb-4.9.0/repository/deployment/server/synapse-configs
+
+USER root
+RUN chown -R wso2user /mnt/wso2esb-4.9.0

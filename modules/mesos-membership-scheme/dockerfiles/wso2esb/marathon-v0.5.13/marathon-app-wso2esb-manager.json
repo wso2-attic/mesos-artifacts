@@ -1,10 +1,7 @@
 {
     "id": "/product/service/wso2esb-manager",
     "cpus": 0.5,
-    "mem": 700.0,
-    "ports": [
-        4000, 9763, 9443, 8280, 8243
-    ],
+    "mem": 800.0,
     "requirePorts": false,
     "instances": 1,
     "executor": "",
@@ -13,6 +10,13 @@
         "docker": {
             "image": "wso2esb-manager:4.9.0",
             "network": "BRIDGE",
+            "portMappings": [
+               { "containerPort": 0, "hostPort": 0, "protocol": "tcp" },
+               { "containerPort": 9763, "hostPort": 0, "protocol": "tcp" },
+               { "containerPort": 9443, "hostPort": 0, "protocol": "tcp" },
+               { "containerPort": 8280, "hostPort": 0, "protocol": "tcp" },
+               { "containerPort": 8243, "hostPort": 0, "protocol": "tcp" }
+            ],
             "privileged": false,
             "parameters": [
              
@@ -27,7 +31,7 @@
         ]
     },
     "env": {
-        
+        "WSO2_SERVER_PROFILE": "manager"
     },
     "constraints": [
        
