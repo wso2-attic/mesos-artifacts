@@ -29,6 +29,8 @@ import org.wso2.carbon.clustering.mesos.client.utils.ModelUtils;
 import static java.util.Arrays.asList;
 
 public class MarathonClient {
+    public static final String APPLICATION_JSON = "application/json";
+
     public static Marathon getInstance(String endpoint) {
         return getInstance(endpoint, null);
     }
@@ -61,8 +63,8 @@ public class MarathonClient {
     private static class MarathonHeadersInterceptor implements RequestInterceptor {
         @Override
         public void apply(RequestTemplate template) {
-            template.header("Accept", "application/json");
-            template.header("Content-Type", "application/json");
+            template.header("Accept", APPLICATION_JSON);
+            template.header("Content-Type", APPLICATION_JSON);
         }
     }
 
