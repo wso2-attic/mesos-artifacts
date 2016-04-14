@@ -160,16 +160,13 @@ public class MesosMembershipScheme implements HazelcastMembershipScheme {
 
         marathonAppIdList = new ArrayList<>(Arrays.asList(marathonAppIds.split(",")));
         if (StringUtils.isEmpty(localAppId)) {
-            log.warn("MARATHON_APP_ID property was not found in environment variables");
-        } else {
-            if (!marathonAppIdList.contains(localAppId)) {
-                marathonAppIdList.add(localAppId);
-            }
+            throw new IllegalArgumentException("MARATHON_APP_ID property was not found in environment variables");
         }
-    }
 
-    private String getParameterValue(String name) {
-        return getParameterValue(name, null);
+        if (!marathonAppIdList.contains(localAppId)) {
+            marathonAppIdList.add(localAppId);
+        }
+        log.info("Marathon application list: " + marathonAppIdList);
     }
 
     private String getParameterValue(String name, String def) {
