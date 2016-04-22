@@ -40,7 +40,7 @@
     </licenses>
 
     <modules>
-        <module>modules/mesos-membership-scheme</module>
+        <module>common/mesos-membership-scheme</module>
     </modules>
 
     <profiles>

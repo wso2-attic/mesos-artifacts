@@ -17,7 +17,6 @@
 
 # ------------------------------------------------------------------------
 set -e
-source /etc/profile.d/set_java_home.sh
 axis2_xml_file_path=${CARBON_HOME}/repository/conf/axis2/axis2.xml
 
 # replace localMemberHost with Apache Mesos host IP

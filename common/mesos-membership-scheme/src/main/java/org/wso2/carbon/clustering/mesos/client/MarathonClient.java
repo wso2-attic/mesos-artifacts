@@ -27,9 +27,9 @@ import org.wso2.carbon.clustering.mesos.client.utils.MarathonException;
 import org.wso2.carbon.clustering.mesos.client.utils.ModelUtils;
 
 import static java.util.Arrays.asList;
+import static org.wso2.carbon.clustering.mesos.MesosConstants.APPLICATION_JSON;
 
 public class MarathonClient {
-    public static final String APPLICATION_JSON = "application/json";
 
     public static Marathon getInstance(String endpoint) {
         return getInstance(endpoint, null);

@@ -25,4 +25,5 @@ public class MesosConstants {
     public static final String MARATHON_APP_ID = "MARATHON_APP_ID";
     public static final String MARATHON_HOST = "HOST";
     public static final String DEFAULT_MARATHON_ENDPOINT = "http://" + System.getenv(MARATHON_HOST) + ":8080";
+    public static final String APPLICATION_JSON = "application/json";
 }

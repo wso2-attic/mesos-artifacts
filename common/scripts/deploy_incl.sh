@@ -16,6 +16,15 @@
 # limitations under the License
 
 # ------------------------------------------------------------------------
+
+mesos_membership_scheme_jar="mesos-membership-scheme-1.0.0-SNAPSHOT.jar"
+marathon_endpoint="http://mesos:8080/v2"
+docker_build=false
+deploy_marathon_app=false
+export_docker_image=false
+docker_image_export_path="/tmp/mesos-artifacts/esb"
+marathon_version="0.5.13"
+
 function echoDim () {
     if [ -z "$2" ]; then
         echo $'\e[2m'"${1}"$'\e[0m'
@@ -53,5 +62,50 @@ function listDirectories () {
     for dir in "${dirs[@]}"
     do
         echo "${dir}"
+    done
+}
+
+function build_docker_image () {
+    product_name=$1
+    product_profile=$2
+    product_version=$3
+    dockerfile_path=$4
+    echoBold "Building docker image for ${product_name}-${product_profile}:${product_version}..."
+    build_cmd="docker build --no-cache=true \
+        -t \"${product_name}-${product_profile}:${product_version}\" \"${dockerfile_path}\""
+    eval $build_cmd
+}
+
+# Show usage and exit
+function showUsageAndExit() {
+    echoError "Insufficient or invalid options provided!"
+    echo
+    echoBold "Usage: ./build.sh -v [product-version]"
+    echo
+    exit 1
+}
+
+function get_opts () {
+    while getopts ":v:m:bdEy" FLAG; do
+        case ${FLAG} in
+            b)
+                docker_build=true
+                ;;
+            d)
+                deploy_marathon_app=true
+                ;;
+            E)
+                export_docker_image=true
+                ;;
+            v)
+                product_version=$OPTARG
+                ;;
+            m)
+                marathon_version=$OPTARG
+                ;;
+            \?)
+                showUsageAndExit
+                ;;
+        esac
     done
 }

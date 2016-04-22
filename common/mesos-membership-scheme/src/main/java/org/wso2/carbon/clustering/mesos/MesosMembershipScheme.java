@@ -101,24 +101,13 @@ public class MesosMembershipScheme implements HazelcastMembershipScheme {
                 try {
                     Collection<Task> tasksCollection = marathonClient.getApp(marathonAppId).getApp().getTasks();
                     for (Task task : tasksCollection) {
-                        String hostname = task.getHost();
-                        if (StringUtils.isEmpty(hostname)) {
-                            throw new ClusteringFault(String.format("Hostname is empty for Marathon task [app] %s, " +
-                                    "[id] %s", marathonAppId, task.getId()));
-                        }
-                        if (task.getPorts() == null || task.getPorts().size() == 0) {
-                            throw new ClusteringFault(String.format("Port list is empty for Marathon task [app] %s, " +
-                                    "[id] %s", marathonAppId, task.getId()));
-                        }
-                        Integer port = task.getPorts().iterator().next();
-                        String memberStr = hostname + ":" + port.toString();
-                        tcpIpConfig.addMember(memberStr);
-                        log.info(String.format("Member added to cluster configuration: [member] %s", memberStr));
+                        addMembersInTask(task);
                     }
                 } catch (MarathonException marathonEx) {
                     if (marathonEx.getStatus() == HttpStatus.SC_NOT_FOUND) {
-                        throw new ClusteringFault(String.format("Marathon application [id] %s was not found",
-                                marathonAppId));
+                        /* Log a warning and continue, let dependent applications (that may not have been deployed yet)
+                        add this node to the cluster */
+                        log.warn(String.format("Marathon application [id] %s was not found", marathonAppId));
                     } else if (marathonEx.getStatus() == HttpStatus.SC_REQUEST_TIMEOUT) {
                         throw new ClusteringFault("Marathon REST API call timed out. Please check whether Marathon " +
                                 "framework is accessible via the given endpoint");
@@ -132,6 +121,22 @@ public class MesosMembershipScheme implements HazelcastMembershipScheme {
         } catch (Exception e) {
             throw new ClusteringFault("Mesos clustering membership initialization failed", e);
         }
+    }
+
+    private void addMembersInTask(Task task) throws Exception {
+        String hostname = task.getHost();
+        if (StringUtils.isEmpty(hostname)) {
+            throw new ClusteringFault(String.format("Hostname is empty for Marathon task [app] %s, " +
+                    "[id] %s", task.getAppId(), task.getId()));
+        }
+        if (task.getPorts() == null || task.getPorts().size() == 0) {
+            throw new ClusteringFault(String.format("Port list is empty for Marathon task [app] %s, " +
+                    "[id] %s", task.getAppId(), task.getId()));
+        }
+        Integer port = task.getPorts().iterator().next();
+        String memberStr = hostname + ":" + port.toString();
+        nwConfig.getJoin().getTcpIpConfig().addMember(memberStr);
+        log.info(String.format("Member added to cluster configuration: [member] %s", memberStr));
     }
 
     @Override
