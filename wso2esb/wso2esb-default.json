@@ -1,5 +1,5 @@
 {
-    "id": "/product/service/wso2esb-default",
+    "id": "wso2esb-default",
     "cpus": 0.5,
     "mem": 800.0,
     "instances": 1,
