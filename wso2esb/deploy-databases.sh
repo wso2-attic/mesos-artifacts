@@ -19,8 +19,13 @@
 
 set -e
 self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 marathon_endpoint="http://m1.dcos:8080/v2"
 source "${self_path}/../common/scripts/base.sh"
 
-undeploy ${marathon_endpoint} wso2esb-manager
-undeploy ${marathon_endpoint} wso2esb-worker
+pushd ${self_path}/../common/wso2-shared-dbs/
+./deploy.sh
+popd
+
+deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+
