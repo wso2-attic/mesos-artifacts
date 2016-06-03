@@ -26,9 +26,8 @@ source "${self_path}/../common/scripts/base.sh"
 pushd ${self_path}/../common/wso2-shared-dbs/
 ./deploy.sh
 popd
-sleep 5
 
 deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
-sleep 5
+sleep 30
 deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
 #deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
