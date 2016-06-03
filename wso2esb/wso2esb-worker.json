@@ -1,0 +1,53 @@
+{
+    "id": "wso2esb-worker",
+    "cpus": 1,
+    "mem": 800,
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "docker": {
+            "image": "wso2esb-worker:4.9.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 8280,
+                    "protocol": "tcp",
+                    "name": "pass-through-http",
+                    "labels": {
+                        "VIP_1": "8280"
+                    }
+                },
+                {
+                    "containerPort": 8243,
+                    "protocol": "tcp",
+                    "name": "pass-through-https",
+                    "labels": {
+                        "VIP_1": "8243"
+                    }
+                },
+                {
+                    "containerPort": 9763,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                }
+            ]
+        },
+        "type": "DOCKER"
+    },
+    "env": {
+    },
+    "labels": {
+        "HAPROXY_GROUP": "marathon-lb"
+    }
+}

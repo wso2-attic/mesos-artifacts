@@ -1,0 +1,37 @@
+{
+    "id": "wso2esb-manager",
+    "cpus": 1,
+    "mem": 800,
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "docker": {
+            "image": "wso2esb-manager:4.9.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 9763,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                }
+            ]
+        },
+        "type": "DOCKER"
+    },
+    "env": {
+    },
+    "labels": {
+        "HAPROXY_GROUP": "marathon-lb"
+    }
+}

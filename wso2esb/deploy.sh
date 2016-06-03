@@ -19,47 +19,14 @@
 
 set -e
 self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-product_name="wso2esb"
-product_version="4.9.0"
 
-source "${self_path}/../common/scripts/deploy_incl.sh"
+marathon_endpoint="http://m1.dcos:8080/v2"
+source "${self_path}/../common/scripts/base.sh"
 
-# Get arguments
-get_opts $@
+pushd ${self_path}/../common/wso2-shared-dbs/
+./deploy.sh
+popd
 
-if [ ${docker_build} == true ]; then
-    echoBold "Copying artifacts needed to build Docker images..."
-    cp "${self_path}/wso2esb-manager-init.sh" "${self_path}/scripts/"
-    cp "${self_path}/wso2esb-worker-init.sh" "${self_path}/scripts/"
-
-    mkdir -p "${self_path}/artifacts/configs/repository/conf"
-    cp -a "${self_path}/../../src/test/esb/configs/repository/conf" "${self_path}/artifacts/configs/repository/"
-
-    mkdir -p "${self_path}/artifacts/configs/bin"
-    cp -a "${self_path}/../../src/test/esb/configs/bin" "${self_path}/artifacts/configs/"
-
-    mkdir -p "${self_path}/artifacts/configs/repository/components/dropins"
-    cp "${self_path}/../../target/${mesos_membership_scheme_jar}" "${self_path}/artifacts/configs/repository/components/dropins/"
-
-    mkdir -p "${self_path}/artifacts/configs/repository/deployment/server/"
-    cp -a "${self_path}/../../src/test/esb/synapse-configs" "${self_path}/artifacts/configs/repository/deployment/server/"
-
-    build_docker_image $product_name "manager" $product_version $self_path
-    build_docker_image $product_name "worker" $product_version $self_path
-fi
-
-if [ ${export_docker_image} == true ]; then
-   mkdir -p ${docker_image_export_path}
-   echoBold "Exporting Docker image wso2esb-manager:${product_version} to ${docker_image_export_path}..."
-   docker save wso2esb-manager:${product_version} > ${docker_image_export_path}/wso2esb-manager-${product_version}.tar
-
-   echoBold "Exporting Docker image wso2esb-worker:${product_version} to ${docker_image_export_path}..."
-   docker save wso2esb-worker:${product_version} > ${docker_image_export_path}/wso2esb-worker-${product_version}.tar
-fi
-
-
-if [ ${deploy_marathon_app} == true ]; then
-   echoBold "Deploying Apache Mesos Marathon application for WSO2 ESB 4.9.0..."
-   curl -X POST -H "Content-Type: application/json" -d@${self_path}/marathon-v${marathon_version}/marathon-app-wso2esb-manager.json -i "${marathon_endpoint}/apps"
-   curl -X POST -H "Content-Type: application/json" -d@${self_path}/marathon-v${marathon_version}/marathon-app-wso2esb-worker.json -i "${marathon_endpoint}/apps"
-fi
+deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
+#deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
