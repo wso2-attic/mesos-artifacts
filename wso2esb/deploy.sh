@@ -23,5 +23,32 @@ self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 marathon_endpoint="http://m1.dcos:8080/v2"
 source "${self_path}/../common/scripts/base.sh"
 
+bash ${self_path}/../common/marathon-lb/deploy.sh
+echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
+while ! nc -z a1.dcos 9090; do
+  sleep 0.1
+done
+echo "marathon-lb started successfully"
+
+bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
+echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
+while ! nc -z a1.dcos 10000; do
+  sleep 0.1
+done
+echo "mysql-gov-db started successfully"
+
+echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
+while ! nc -z a1.dcos 10001; do
+  sleep 0.1
+done
+echo "mysql-user-db started successfully"
+
+deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+echo "Waiting for mysql-esb-db to launch on a1.dcos:10002..."
+while ! nc -z a1.dcos 10002; do
+  sleep 0.1
+done
+echo "mysql-esb-db started successfully"
+
 deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
 deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json

@@ -24,3 +24,6 @@ source "${self_path}/../common/scripts/base.sh"
 
 undeploy ${marathon_endpoint} wso2esb-manager
 undeploy ${marathon_endpoint} wso2esb-worker
+undeploy ${marathon_endpoint} mysql-esb-db
+bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
+bash ${self_path}/../common/marathon-lb/undeploy.sh
