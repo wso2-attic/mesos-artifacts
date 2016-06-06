@@ -31,6 +31,8 @@ done
 echo "marathon-lb started successfully"
 
 bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
+deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+
 echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
 while ! nc -z a1.dcos 10000; do
   sleep 0.1
@@ -43,7 +45,6 @@ while ! nc -z a1.dcos 10001; do
 done
 echo "mysql-user-db started successfully"
 
-deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
 echo "Waiting for mysql-esb-db to launch on a1.dcos:10002..."
 while ! nc -z a1.dcos 10002; do
   sleep 0.1
@@ -51,4 +52,15 @@ done
 echo "mysql-esb-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
+echo "Waiting for wso2esb-manager to launch on a1.dcos:10094..."
+while ! nc -z a1.dcos 10094; do
+  sleep 0.1
+done
+echo "wso2esb-manager started successfully"
+
 deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
+echo "Waiting for wso2esb-worker to launch on a1.dcos:10091..."
+while ! nc -z a1.dcos 10091; do
+  sleep 0.1
+done
+echo "wso2esb-worker started successfully"
