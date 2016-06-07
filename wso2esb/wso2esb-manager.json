@@ -1,6 +1,6 @@
 {
     "id": "wso2esb-manager",
-    "cpus": 1,
+    "cpus": 0.5,
     "mem": 1024,
     "disk": 0,
     "instances": 1,
