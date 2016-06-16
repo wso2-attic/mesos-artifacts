@@ -12,6 +12,7 @@
             "portMappings": [
                 {
                     "containerPort": 8280,
+                    "servicePort": 10091,
                     "protocol": "tcp",
                     "name": "pass-through-http",
                     "labels": {
@@ -20,6 +21,7 @@
                 },
                 {
                     "containerPort": 8243,
+                    "servicePort": 10092,
                     "protocol": "tcp",
                     "name": "pass-through-https",
                     "labels": {
@@ -28,6 +30,7 @@
                 },
                 {
                     "containerPort": 9763,
+                    "servicePort": 10093,
                     "protocol": "tcp",
                     "name": "servlet-http",
                     "labels": {
@@ -36,6 +39,7 @@
                 },
                 {
                     "containerPort": 9443,
+                    "servicePort": 10094,
                     "protocol": "tcp",
                     "name": "servlet-https",
                     "labels": {
