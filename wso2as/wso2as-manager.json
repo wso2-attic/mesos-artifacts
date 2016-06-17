@@ -1,0 +1,39 @@
+{
+    "id": "wso2as-manager",
+    "cpus": 0.5,
+    "mem": 1024,
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "docker": {
+            "image": "wso2as-manager:5.3.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10021,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10022,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                }
+            ]
+        },
+        "type": "DOCKER"
+    },
+    "env": {
+    },
+    "labels": {
+        "HAPROXY_GROUP": "marathon-lb"
+    }
+}
