@@ -52,15 +52,15 @@ done
 echo "mysql-as-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2as-manager.json
-echo "Waiting for wso2as-manager to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
+echo "Waiting for wso2as-manager to launch on a1.dcos:10022..."
+while ! nc -z a1.dcos 10022; do
   sleep 0.1
 done
-echo "wso2as-manager started successfully"
+echo "wso2as-manager started successfully: https://wso2as-manager:10022/carbon"
 
 deploy ${marathon_endpoint} ${self_path}/wso2as-worker.json
-echo "Waiting for wso2as-worker to launch on a1.dcos:10091..."
-while ! nc -z a1.dcos 10091; do
+echo "Waiting for wso2as-worker to launch on a1.dcos:10024..."
+while ! nc -z a1.dcos 10024; do
   sleep 0.1
 done
-echo "wso2as-worker started successfully"
+echo "wso2as-worker started successfully: https://wso2as-worker:10024/carbon"
