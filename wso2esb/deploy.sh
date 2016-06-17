@@ -56,11 +56,11 @@ echo "Waiting for wso2esb-manager to launch on a1.dcos:10094..."
 while ! nc -z a1.dcos 10094; do
   sleep 0.1
 done
-echo "wso2esb-manager started successfully"
+echo "wso2esb-manager started successfully: https://wso2esb-manager:10094/carbon"
 
 deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
-echo "Waiting for wso2esb-worker to launch on a1.dcos:10091..."
-while ! nc -z a1.dcos 10091; do
+echo "Waiting for wso2esb-worker to launch on a1.dcos:10092..."
+while ! nc -z a1.dcos 10092; do
   sleep 0.1
 done
-echo "wso2esb-worker started successfully"
+echo "wso2esb-worker started successfully: https://wso2esb-worker:10092/"
