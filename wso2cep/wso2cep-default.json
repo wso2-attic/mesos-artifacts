@@ -1,0 +1,73 @@
+{
+    "id": "wso2cep-default",
+    "cpus": 0.5,
+    "mem": 800.0,
+    "instances": 1,
+    "executor": "",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wso2cep:4.0.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10091,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10092,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                }
+
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/mnt/mesos-artifacts/cep",
+                "hostPath": "/mnt/mesos-artifacts/cep",
+                "mode": "RW"
+            }
+        ]
+    },
+    "env": {
+
+    },
+    "constraints": [
+
+    ],
+    "labels": {
+        "environment": "dev",
+        "HAPROXY_GROUP": "marathon-lb"
+    },
+    "fetch": [
+
+    ],
+    "dependencies": [],
+    "healthChecks": [
+        {
+            "protocol": "TCP",
+            "portIndex": 0,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "backoffSeconds": 1,
+    "backoffFactor": 1.15,
+    "maxLaunchDelaySeconds": 3600,
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0.5,
+        "maximumOverCapacity": 0.2
+    }
+}

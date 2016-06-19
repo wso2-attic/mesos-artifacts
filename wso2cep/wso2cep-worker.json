@@ -1,0 +1,67 @@
+{
+    "id": "wso2cep-worker",
+    "cpus": 0.5,
+    "mem": 1024,
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "docker": {
+            "image": "wso2cep-worker:4.0.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10093,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10094,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                },
+                {
+                    "containerPort": 7611,
+                    "servicePort": 10095,
+                    "protocol": "tcp",
+                    "name": "thrift",
+                    "labels": {
+                        "VIP_2": "7611"
+                    }
+                },
+                {
+                    "containerPort": 7711,
+                    "servicePort": 10096,
+                    "protocol": "tcp",
+                    "name": "thrift-ssl",
+                    "labels": {
+                        "VIP_3": "7711"
+                    }
+                }
+            ]
+        },
+        "type": "DOCKER"
+    },
+    "env": {
+    },
+    "healthChecks": [
+        {
+            "protocol": "TCP",
+            "portIndex": 0,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+        "HAPROXY_GROUP": "marathon-lb"
+    }
+}
