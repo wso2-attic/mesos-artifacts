@@ -31,7 +31,7 @@ done
 echo "marathon-lb started successfully"
 
 bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+deploy ${marathon_endpoint} ${self_path}/mysql-brs-db.json
 
 echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
 while ! nc -z a1.dcos 10000; do
@@ -45,29 +45,22 @@ while ! nc -z a1.dcos 10001; do
 done
 echo "mysql-user-db started successfully"
 
-echo "Waiting for mysql-esb-db to launch on a1.dcos:10002..."
+echo "Waiting for mysql-brs-db to launch on a1.dcos:10002..."
 while ! nc -z a1.dcos 10002; do
   sleep 0.1
 done
-echo "mysql-esb-db started successfully"
+echo "mysql-brs-db started successfully"
 
-deploy ${marathon_endpoint} ${self_path}/wso2esb-default.json
-echo "Waiting for wso2esb-default to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
-  sleep 0.1
+deploy ${marathon_endpoint} ${self_path}/wso2brs-manager.json
+echo "Waiting for wso2brs-manager to launch on a1.dcos:10092..."
+while ! nc -z a1.dcos 10092; do
+ sleep 0.1
 done
-echo "wso2esb-default started successfully: https://wso2esb-default:10094/carbon"
+echo "wso2brs-manager started successfully: https://wso2brs-manager:10092/carbon"
 
-# deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
-# echo "Waiting for wso2esb-manager to launch on a1.dcos:10094..."
-# while ! nc -z a1.dcos 10094; do
-#   sleep 0.1
-# done
-# echo "wso2esb-manager started successfully: https://wso2esb-manager:10094/carbon"
-
-# deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
-# echo "Waiting for wso2esb-worker to launch on a1.dcos:10092..."
-# while ! nc -z a1.dcos 10092; do
-#   sleep 0.1
-# done
-# echo "wso2esb-worker started successfully: https://wso2esb-worker:10092/"
+deploy ${marathon_endpoint} ${self_path}/wso2brs-worker.json
+echo "Waiting for wso2brs-worker to launch on a1.dcos:10094..."
+while ! nc -z a1.dcos 10094; do
+ sleep 0.1
+done
+echo "wso2brs-worker started successfully: https://wso2brs-worker:10094/"

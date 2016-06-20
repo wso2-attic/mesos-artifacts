@@ -1,0 +1,49 @@
+{
+    "id": "wso2greg-store",
+    "cpus": 0.5,
+    "mem": 1024,
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "docker": {
+            "image": "wso2greg-store:5.1.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10093,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_0": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10094,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_1": "9443"
+                    }
+                }
+            ]
+        },
+        "type": "DOCKER"
+    },
+    "env": {
+    },
+    "healthChecks": [
+        {
+            "protocol": "TCP",
+            "portIndex": 0,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+        "HAPROXY_GROUP": "marathon-lb"
+    }
+}
