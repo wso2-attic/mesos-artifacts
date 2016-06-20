@@ -25,7 +25,7 @@
                     "protocol": "tcp",
                     "name": "pass-through-https",
                     "labels": {
-                        "VIP_0": "8243"
+                        "VIP_1": "8243"
                     }
                 },
                 {
@@ -34,7 +34,7 @@
                     "protocol": "tcp",
                     "name": "servlet-http",
                     "labels": {
-                        "VIP_0": "9763"
+                        "VIP_2": "9763"
                     }
                 },
                 {
@@ -43,7 +43,7 @@
                     "protocol": "tcp",
                     "name": "servlet-https",
                     "labels": {
-                        "VIP_0": "9443"
+                        "VIP_3": "9443"
                     }
                 }
 
