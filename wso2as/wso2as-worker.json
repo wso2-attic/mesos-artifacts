@@ -10,21 +10,21 @@
             "network": "BRIDGE",
             "portMappings": [
                 {
-                    "containerPort": 8280,
+                    "containerPort": 9763,
                     "servicePort": 10023,
                     "protocol": "tcp",
-                    "name": "pass-through-http",
+                    "name": "servlet-http",
                     "labels": {
-                        "VIP_1": "8280"
+                        "VIP_0": "9763"
                     }
                 },
                 {
-                    "containerPort": 8243,
+                    "containerPort": 9443,
                     "servicePort": 10024,
                     "protocol": "tcp",
-                    "name": "pass-through-https",
+                    "name": "servlet-https",
                     "labels": {
-                        "VIP_1": "8243"
+                        "VIP_1": "9443"
                     }
                 }
             ]

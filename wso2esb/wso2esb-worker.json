@@ -26,6 +26,24 @@
                     "labels": {
                         "VIP_1": "8243"
                     }
+                },
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10093,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_3": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10094,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_4": "9443"
+                    }
                 }
             ]
         },
