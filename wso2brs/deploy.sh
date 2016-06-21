@@ -52,15 +52,15 @@ done
 echo "mysql-brs-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2brs-manager.json
-echo "Waiting for wso2brs-manager to launch on a1.dcos:10092..."
-while ! nc -z a1.dcos 10092; do
+echo "Waiting for wso2brs-manager to launch on a1.dcos:10042..."
+while ! nc -z a1.dcos 10042; do
  sleep 0.1
 done
-echo "wso2brs-manager started successfully: https://wso2brs-manager:10092/carbon"
+echo "wso2brs-manager started successfully: https://wso2brs-manager:10042/carbon"
 
 deploy ${marathon_endpoint} ${self_path}/wso2brs-worker.json
-echo "Waiting for wso2brs-worker to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
+echo "Waiting for wso2brs-worker to launch on a1.dcos:10044..."
+while ! nc -z a1.dcos 10044; do
  sleep 0.1
 done
-echo "wso2brs-worker started successfully: https://wso2brs-worker:10094/"
+echo "wso2brs-worker started successfully: https://wso2brs-worker:10044/"

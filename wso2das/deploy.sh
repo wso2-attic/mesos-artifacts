@@ -52,9 +52,9 @@ done
 echo "mysql-das-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2das-default.json
-echo "Waiting for wso2das-default to launch on a1.dcos:10092..."
-while ! nc -z a1.dcos 10092; do
+echo "Waiting for wso2das-default to launch on a1.dcos:10062..."
+while ! nc -z a1.dcos 10062; do
  sleep 0.1
 done
-echo "wso2das-default started successfully: https://wso2das-default:10092/carbon"
+echo "wso2das-default started successfully: https://wso2das-default:10062/carbon"
 

@@ -52,15 +52,15 @@ done
 echo "mysql-greg-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2greg-publisher.json
-echo "Waiting for wso2greg-publisher to launch on a1.dcos:10092..."
-while ! nc -z a1.dcos 10092; do
+echo "Waiting for wso2greg-publisher to launch on a1.dcos:10102..."
+while ! nc -z a1.dcos 10102; do
  sleep 0.1
 done
-echo "wso2greg-publisher started successfully: https://wso2greg-publisher:10092/carbon"
+echo "wso2greg-publisher started successfully: https://wso2greg-publisher:10102/carbon"
 
 deploy ${marathon_endpoint} ${self_path}/wso2greg-store.json
-echo "Waiting for wso2greg-store to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
+echo "Waiting for wso2greg-store to launch on a1.dcos:10104..."
+while ! nc -z a1.dcos 10104; do
  sleep 0.1
 done
-echo "wso2greg-store started successfully: https://wso2greg-store:10094/"
+echo "wso2greg-store started successfully: https://wso2greg-store:10104/"
