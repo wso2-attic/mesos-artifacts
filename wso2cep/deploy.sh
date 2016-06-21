@@ -52,15 +52,15 @@ done
 echo "mysql-cep-db started successfully"
 
 deploy ${marathon_endpoint} ${self_path}/wso2cep-presenter.json
-echo "Waiting for wso2cep-presenter to launch on a1.dcos:10092..."
-while ! nc -z a1.dcos 10092; do
+echo "Waiting for wso2cep-presenter to launch on a1.dcos:10052..."
+while ! nc -z a1.dcos 10052; do
  sleep 0.1
 done
-echo "wso2cep-presenter started successfully: https://wso2cep-presenter:10092/carbon"
+echo "wso2cep-presenter started successfully: https://wso2cep-presenter:10052/carbon"
 
 deploy ${marathon_endpoint} ${self_path}/wso2cep-worker.json
-echo "Waiting for wso2cep-worker to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
+echo "Waiting for wso2cep-worker to launch on a1.dcos:10054..."
+while ! nc -z a1.dcos 10054; do
  sleep 0.1
 done
-echo "wso2cep-worker started successfully: https://wso2cep-worker:10094/"
+echo "wso2cep-worker started successfully: https://wso2cep-worker:10054/"
