@@ -32,6 +32,7 @@
         "type": "DOCKER"
     },
     "env": {
+        "KEY_STORE_PASSWORD": "wso2carbon"
     },
     "healthChecks": [
         {
