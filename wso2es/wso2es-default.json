@@ -1,5 +1,5 @@
 {
-    "id": "wso2as-default",
+    "id": "wso2es-default",
     "cpus": 0.5,
     "mem": 800.0,
     "instances": 1,
@@ -7,12 +7,12 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2as:5.3.0",
+            "image": "wso2es:2.0.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
                     "containerPort": 9763,
-                    "servicePort": 10021,
+                    "servicePort": 10081,
                     "protocol": "tcp",
                     "name": "servlet-http",
                     "labels": {
@@ -21,19 +21,20 @@
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10022,
+                    "servicePort": 10082,
                     "protocol": "tcp",
                     "name": "servlet-https",
                     "labels": {
                         "VIP_1": "9443"
                     }
                 }
+
             ]
         },
         "volumes": [
             {
-                "containerPath": "/mnt/mesos-artifacts/as",
-                "hostPath": "/mnt/mesos-artifacts/as",
+                "containerPath": "/mnt/mesos-artifacts/es",
+                "hostPath": "/mnt/mesos-artifacts/es",
                 "mode": "RW"
             }
         ]
@@ -53,7 +54,14 @@
     ],
     "dependencies": [],
     "healthChecks": [
-
+        {
+            "protocol": "TCP",
+            "portIndex": 0,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
     ],
     "backoffSeconds": 1,
     "backoffFactor": 1.15,

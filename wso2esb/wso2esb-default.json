@@ -58,7 +58,7 @@
         ]
     },
     "env": {
-
+        "KEY_STORE_PASSWORD": "wso2carbon"
     },
     "constraints": [
 
