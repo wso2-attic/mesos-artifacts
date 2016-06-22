@@ -1,0 +1,90 @@
+{
+    "id": "wso2am-default",
+    "cpus": 0.5,
+    "mem": 800.0,
+    "instances": 1,
+    "executor": "",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wso2am:1.10.0",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 8280,
+                    "servicePort": 10006,
+                    "protocol": "tcp",
+                    "name": "pass-through-http",
+                    "labels": {
+                        "VIP_0": "8280"
+                    }
+                },
+                {
+                    "containerPort": 8243,
+                    "servicePort": 10007,
+                    "protocol": "tcp",
+                    "name": "pass-through-https",
+                    "labels": {
+                        "VIP_1": "8243"
+                    }
+                },
+                {
+                    "containerPort": 9763,
+                    "servicePort": 10008,
+                    "protocol": "tcp",
+                    "name": "servlet-http",
+                    "labels": {
+                        "VIP_2": "9763"
+                    }
+                },
+                {
+                    "containerPort": 9443,
+                    "servicePort": 10009,
+                    "protocol": "tcp",
+                    "name": "servlet-https",
+                    "labels": {
+                        "VIP_3": "9443"
+                    }
+                }
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/mnt/mesos-artifacts/apim",
+                "hostPath": "/mnt/mesos-artifacts/apim",
+                "mode": "RW"
+            }
+        ]
+    },
+    "env": {
+        "KEY_STORE_PASSWORD": "wso2carbon"
+    },
+    "constraints": [
+
+    ],
+    "labels": {
+        "environment": "dev",
+        "HAPROXY_GROUP": "marathon-lb"
+    },
+    "fetch": [
+
+    ],
+    "dependencies": [],
+    "healthChecks": [
+        {
+            "protocol": "TCP",
+            "portIndex": 0,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "backoffSeconds": 1,
+    "backoffFactor": 1.15,
+    "maxLaunchDelaySeconds": 3600,
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0.5,
+        "maximumOverCapacity": 0.2
+    }
+}
