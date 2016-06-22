@@ -27,6 +27,51 @@
                     "labels": {
                         "VIP_1": "9443"
                     }
+                },
+                {
+                    "containerPort": 5672,
+                    "servicePort": 10123,
+                    "protocol": "tcp",
+                    "name": "amqp",
+                    "labels": {
+                        "VIP_2": "5672"
+                    }
+                },
+                {
+                    "containerPort": 8672,
+                    "servicePort": 10124,
+                    "protocol": "tcp",
+                    "name": "amqp-ssl",
+                    "labels": {
+                        "VIP_3": "8672"
+                    }
+                },
+                {
+                    "containerPort": 1883,
+                    "servicePort": 10125,
+                    "protocol": "tcp",
+                    "name": "mqtt",
+                    "labels": {
+                        "VIP_4": "1883"
+                    }
+                },
+                {
+                    "containerPort": 8833,
+                    "servicePort": 10126,
+                    "protocol": "tcp",
+                    "name": "mqtt-ssl",
+                    "labels": {
+                        "VIP_5": "8833"
+                    }
+                },
+                {
+                    "containerPort": 7611,
+                    "servicePort": 10127,
+                    "protocol": "tcp",
+                    "name": "thrift",
+                    "labels": {
+                        "VIP_6": "7611"
+                    }
                 }
             ]
         },

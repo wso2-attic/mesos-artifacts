@@ -27,6 +27,24 @@
                     "labels": {
                         "VIP_1": "9443"
                     }
+                },
+                {
+                    "containerPort": 8000,
+                    "servicePort": 10113,
+                    "protocol": "tcp",
+                    "name": "kdc-server",
+                    "labels": {
+                        "VIP_2": "8000"
+                    }
+                },
+                {
+                    "containerPort": 10500,
+                    "servicePort": 10114,
+                    "protocol": "tcp",
+                    "name": "thrift-entitlement",
+                    "labels": {
+                        "VIP_3": "10500"
+                    }
                 }
             ]
         },
