@@ -1,58 +1,40 @@
 {
-    "id": "wso2esb-worker",
-    "cpus": 0.5,
-    "mem": 1024,
-    "disk": 0,
-    "instances": 1,
-    "container": {
-        "docker": {
-            "image": "wso2esb-worker:4.9.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "containerPort": 8280,
-                    "servicePort": 10091,
-                    "protocol": "tcp",
-                    "name": "pass-through-http",
-                    "labels": {
-                        "VIP_1": "8280"
-                    }
-                },
-                {
-                    "containerPort": 8243,
-                    "servicePort": 10092,
-                    "protocol": "tcp",
-                    "name": "pass-through-https",
-                    "labels": {
-                        "VIP_1": "8243"
-                    }
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10093,
-                    "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_3": "9763"
-                    }
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10094,
-                    "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_4": "9443"
-                    }
-                }
-            ]
+  "id": "wso2esb-worker",
+  "cpus": 0.2,
+  "mem": 700,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "wso2esb-worker:4.9.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "protocol": "tcp"
         },
-        "type": "DOCKER"
+        {
+          "containerPort": 8280,
+          "servicePort": 10091,
+          "protocol": "tcp",
+          "name": "pass-through-http"
+        },
+        {
+          "containerPort": 8243,
+          "servicePort": 10092,
+          "protocol": "tcp",
+          "name": "pass-through-https"
+        }
+      ]
     },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "HAPROXY_GROUP": "marathon-lb"
-    }
+    "type": "DOCKER"
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_GROUP": "marathon-lb"
+  }
 }

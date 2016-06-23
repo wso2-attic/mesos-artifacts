@@ -1,65 +1,62 @@
 {
-    "id": "wso2as-default",
-    "cpus": 0.5,
-    "mem": 800.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2as:5.3.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10021,
-                    "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10022,
-                    "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
-                }
-            ]
+  "id": "wso2as-default",
+  "cpus": 0.2,
+  "mem": 700,
+  "instances": 1,
+  "executor": "",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2as:5.3.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "protocol": "tcp"
         },
-        "volumes": [
-            {
-                "containerPath": "/mnt/mesos-artifacts/as",
-                "hostPath": "/mnt/mesos-artifacts/as",
-                "mode": "RW"
-            }
-        ]
+        {
+          "containerPort": 9763,
+          "servicePort": 10021,
+          "protocol": "tcp",
+          "name": "servlet-http"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10022,
+          "protocol": "tcp",
+          "name": "servlet-https"
+        }
+      ]
     },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "constraints": [
-
-    ],
-    "labels": {
-        "environment": "dev",
-        "HAPROXY_GROUP": "marathon-lb"
-    },
-    "fetch": [
-
-    ],
-    "dependencies": [],
-    "healthChecks": [
-
-    ],
-    "backoffSeconds": 1,
-    "backoffFactor": 1.15,
-    "maxLaunchDelaySeconds": 3600,
-    "upgradeStrategy": {
-        "minimumHealthCapacity": 0.5,
-        "maximumOverCapacity": 0.2
-    }
+    "volumes": [
+      {
+        "containerPath": "/mnt/mesos-artifacts/as",
+        "hostPath": "/mnt/mesos-artifacts/as",
+        "mode": "RW"
+      }
+    ]
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "constraints": [
+  ],
+  "labels": {
+    "environment": "dev",
+    "HAPROXY_GROUP": "marathon-lb"
+  },
+  "fetch": [
+  ],
+  "dependencies": [],
+  "healthChecks": [
+  ],
+  "backoffSeconds": 1,
+  "backoffFactor": 1.15,
+  "maxLaunchDelaySeconds": 3600,
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 0.2
+  }
 }

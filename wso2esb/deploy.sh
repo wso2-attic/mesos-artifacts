@@ -18,9 +18,14 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+manager_service_port=32095
+worker_service_port=32093
+default_service_port=32093
+marathon_lb_port=9090
 marathon_endpoint="http://m1.dcos:8080/v2"
+
+self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source "${self_path}/../common/scripts/base.sh"
 
 bash ${self_path}/../common/marathon-lb/deploy.sh
@@ -60,7 +65,7 @@ echo "wso2esb-manager started successfully: https://wso2esb-manager:10096/carbon
 
 deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
 echo "Waiting for wso2esb-worker to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10094; do
+while ! nc -z a1.dcos 10091; do
   sleep 0.1
 done
-echo "wso2esb-worker started successfully: https://wso2esb-worker:10094/"
+echo "wso2esb-worker started successfully: http://wso2esb-worker:10091/services/"

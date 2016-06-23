@@ -1,40 +1,40 @@
 {
-    "id": "wso2esb-manager",
-    "cpus": 0.5,
-    "mem": 1024,
-    "disk": 0,
-    "instances": 1,
-    "container": {
-        "docker": {
-            "image": "wso2esb-manager:4.9.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10095,
-                    "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10096,
-                    "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
-                }
-            ]
+  "id": "wso2esb-manager",
+  "cpus": 0.2,
+  "mem": 700,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "wso2esb-manager:4.9.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "protocol": "tcp"
         },
-        "type": "DOCKER"
+        {
+          "containerPort": 9763,
+          "servicePort": 10095,
+          "protocol": "tcp",
+          "name": "servlet-http"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10096,
+          "protocol": "tcp",
+          "name": "servlet-https"
+        }
+      ]
     },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "HAPROXY_GROUP": "marathon-lb"
-    }
+    "type": "DOCKER"
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_GROUP": "marathon-lb"
+  }
 }
