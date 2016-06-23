@@ -41,34 +41,19 @@
           "name": "servlet-https"
         }
       ]
-    },
-    "volumes": [
-      {
-        "containerPath": "/mnt/mesos-artifacts/esb",
-        "hostPath": "/mnt/mesos-artifacts/esb",
-        "mode": "RW"
-      }
-    ]
+    }
   },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 1
+    }
+  ],
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
-  "constraints": [
-  ],
   "labels": {
-    "environment": "dev",
     "HAPROXY_GROUP": "marathon-lb"
-  },
-  "fetch": [
-  ],
-  "dependencies": [],
-  "healthChecks": [
-  ],
-  "backoffSeconds": 1,
-  "backoffFactor": 1.15,
-  "maxLaunchDelaySeconds": 3600,
-  "upgradeStrategy": {
-    "minimumHealthCapacity": 0.5,
-    "maximumOverCapacity": 0.2
   }
 }

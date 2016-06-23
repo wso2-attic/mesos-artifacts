@@ -31,6 +31,13 @@
     },
     "type": "DOCKER"
   },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 1
+    }
+  ],
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
