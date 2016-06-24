@@ -20,19 +20,13 @@
                     "containerPort": 9763,
                     "servicePort": 10009,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
                     "servicePort": 10010,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 }
             ]
         }

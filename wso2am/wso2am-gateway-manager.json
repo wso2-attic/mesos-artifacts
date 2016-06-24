@@ -20,37 +20,25 @@
                     "containerPort": 8280,
                     "servicePort": 10013,
                     "protocol": "tcp",
-                    "name": "pass-through-http",
-                    "labels": {
-                        "VIP_0": "8280"
-                    }
+                    "name": "pass-through-http"
                 },
                 {
                     "containerPort": 8243,
                     "servicePort": 10014,
                     "protocol": "tcp",
-                    "name": "pass-through-https",
-                    "labels": {
-                        "VIP_1": "8243"
-                    }
+                    "name": "pass-through-https"
                 },
                 {
                     "containerPort": 9763,
                     "servicePort": 10015,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
                     "servicePort": 10016,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 }
             ]
         }
