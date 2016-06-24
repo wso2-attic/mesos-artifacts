@@ -6,13 +6,14 @@
   "disk": 0,
   "instances": 1,
   "container": {
+    "type": "DOCKER",
     "docker": {
       "image": "mysql:5.5",
       "network": "BRIDGE",
       "portMappings": [
         {
           "containerPort": 3306,
-          "servicePort": 10002,
+          "servicePort": 10051,
           "protocol": "tcp",
           "name": null,
           "labels": {
@@ -20,8 +21,7 @@
           }
         }
       ]
-    },
-    "type": "DOCKER"
+    }
   },
   "env": {
     "MYSQL_ROOT_PASSWORD": "root",

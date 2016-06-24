@@ -5,43 +5,38 @@
     "disk": 0,
     "instances": 1,
     "container": {
+        "type": "DOCKER",
         "docker": {
-            "image": "wso2brs-manager:2.2.0",
+            "image": "wso2brs-manager-mesos:2.2.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
-                    "servicePort": 10041,
+                    "servicePort": 10042,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10042,
+                    "servicePort": 10043,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 }
             ]
-        },
-        "type": "DOCKER"
+        }
     },
     "env": {
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
     "healthChecks": [
         {
-            "protocol": "TCP",
-            "portIndex": 0,
-            "gracePeriodSeconds": 300,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
-            "maxConsecutiveFailures": 3
+            "portIndex": 1
         }
     ],
     "labels": {

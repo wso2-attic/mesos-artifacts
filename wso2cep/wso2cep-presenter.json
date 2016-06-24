@@ -6,12 +6,18 @@
     "instances": 1,
     "container": {
         "docker": {
-            "image": "wso2cep-presenter:4.0.0",
+            "image": "wso2cep-presenter-mesos:4.0.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
-                    "servicePort": 10051,
+                    "servicePort": 10052,
                     "protocol": "tcp",
                     "name": "servlet-http",
                     "labels": {
@@ -20,7 +26,7 @@
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10052,
+                    "servicePort": 10053,
                     "protocol": "tcp",
                     "name": "servlet-https",
                     "labels": {
@@ -36,12 +42,7 @@
     },
     "healthChecks": [
         {
-            "protocol": "TCP",
-            "portIndex": 0,
-            "gracePeriodSeconds": 300,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
-            "maxConsecutiveFailures": 3
+            "portIndex": 1
         }
     ],
     "labels": {
