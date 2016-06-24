@@ -7,67 +7,40 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2es:2.0.0",
+            "image": "wso2es-mesos:2.0.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
-                    "servicePort": 10081,
+                    "servicePort": 10082,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10082,
+                    "servicePort": 10083,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 }
-
             ]
-        },
-        "volumes": [
-            {
-                "containerPath": "/mnt/mesos-artifacts/es",
-                "hostPath": "/mnt/mesos-artifacts/es",
-                "mode": "RW"
-            }
-        ]
+        }
     },
     "env": {
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
-    "constraints": [
-
-    ],
     "labels": {
         "environment": "dev",
         "HAPROXY_GROUP": "marathon-lb"
     },
-    "fetch": [
-
-    ],
-    "dependencies": [],
     "healthChecks": [
         {
-            "protocol": "TCP",
-            "portIndex": 0,
-            "gracePeriodSeconds": 300,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
-            "maxConsecutiveFailures": 3
+            "portIndex": 1
         }
-    ],
-    "backoffSeconds": 1,
-    "backoffFactor": 1.15,
-    "maxLaunchDelaySeconds": 3600,
-    "upgradeStrategy": {
-        "minimumHealthCapacity": 0.5,
-        "maximumOverCapacity": 0.2
-    }
+    ]
 }

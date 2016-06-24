@@ -6,26 +6,26 @@
     "instances": 1,
     "container": {
         "docker": {
-            "image": "wso2dss-worker:3.5.0",
+            "image": "wso2dss-worker-mesos:3.5.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
-                    "servicePort": 10073,
+                    "servicePort": 10074,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10074,
+                    "servicePort": 10075,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 }
             ]
         },
@@ -36,5 +36,10 @@
     },
     "labels": {
         "HAPROXY_GROUP": "marathon-lb"
-    }
+    },
+    "healthChecks": [
+        {
+            "portIndex": 1
+        }
+    ]
 }
