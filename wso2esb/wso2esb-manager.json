@@ -17,13 +17,13 @@
         },
         {
           "containerPort": 9763,
-          "servicePort": 10095,
+          "servicePort": 10092,
           "protocol": "tcp",
           "name": "servlet-http"
         },
         {
           "containerPort": 9443,
-          "servicePort": 10096,
+          "servicePort": 10093,
           "protocol": "tcp",
           "name": "servlet-https"
         }

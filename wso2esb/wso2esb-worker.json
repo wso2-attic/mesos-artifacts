@@ -17,13 +17,13 @@
         },
         {
           "containerPort": 8280,
-          "servicePort": 10091,
+          "servicePort": 10094,
           "protocol": "tcp",
           "name": "pass-through-http"
         },
         {
           "containerPort": 8243,
-          "servicePort": 10092,
+          "servicePort": 10095,
           "protocol": "tcp",
           "name": "pass-through-https"
         }
