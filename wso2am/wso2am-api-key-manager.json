@@ -7,12 +7,18 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2am-api-key-manager:1.10.0",
+            "image": "wso2am-api-key-manager-mesos:1.10.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
-                    "servicePort": 10006,
+                    "servicePort": 10007,
                     "protocol": "tcp",
                     "name": "servlet-http",
                     "labels": {
@@ -21,7 +27,7 @@
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10007,
+                    "servicePort": 10008,
                     "protocol": "tcp",
                     "name": "servlet-https",
                     "labels": {
@@ -34,32 +40,13 @@
     "env": {
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
-    "constraints": [
-
-    ],
     "labels": {
         "environment": "dev",
         "HAPROXY_GROUP": "marathon-lb"
     },
-    "fetch": [
-
-    ],
-    "dependencies": [],
     "healthChecks": [
         {
-            "protocol": "TCP",
-            "portIndex": 0,
-            "gracePeriodSeconds": 300,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
-            "maxConsecutiveFailures": 3
+            "portIndex": 1
         }
-    ],
-    "backoffSeconds": 1,
-    "backoffFactor": 1.15,
-    "maxLaunchDelaySeconds": 3600,
-    "upgradeStrategy": {
-        "minimumHealthCapacity": 0.5,
-        "maximumOverCapacity": 0.2
-    }
+    ]
 }

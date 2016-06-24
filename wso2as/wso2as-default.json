@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "wso2as:5.3.0",
+      "image": "wso2as-mesos:5.3.0",
       "network": "BRIDGE",
       "portMappings": [
         {
@@ -18,30 +18,21 @@
         },
         {
           "containerPort": 9763,
-          "servicePort": 10021,
+          "servicePort": 10022,
           "protocol": "tcp",
           "name": "servlet-http"
         },
         {
           "containerPort": 9443,
-          "servicePort": 10022,
+          "servicePort": 10023,
           "protocol": "tcp",
           "name": "servlet-https"
         }
       ]
-    },
-    "volumes": [
-      {
-        "containerPath": "/mnt/mesos-artifacts/as",
-        "hostPath": "/mnt/mesos-artifacts/as",
-        "mode": "RW"
-      }
-    ]
+    }
   },
   "healthChecks": [
     {
-      "protocol": "HTTP",
-      "path": "/",
       "portIndex": 1
     }
   ],

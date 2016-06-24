@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "wso2esb:4.9.0",
+      "image": "wso2esb-mesos:4.9.0",
       "network": "BRIDGE",
       "portMappings": [
         {
@@ -18,25 +18,25 @@
         },
         {
           "containerPort": 8280,
-          "servicePort": 10091,
+          "servicePort": 10092,
           "protocol": "tcp",
           "name": "pass-through-http"
         },
         {
           "containerPort": 8243,
-          "servicePort": 10092,
+          "servicePort": 10093,
           "protocol": "tcp",
           "name": "pass-through-https"
         },
         {
           "containerPort": 9763,
-          "servicePort": 10093,
+          "servicePort": 10094,
           "protocol": "tcp",
           "name": "servlet-http"
         },
         {
           "containerPort": 9443,
-          "servicePort": 10094,
+          "servicePort": 10095,
           "protocol": "tcp",
           "name": "servlet-https"
         }
@@ -45,8 +45,6 @@
   },
   "healthChecks": [
     {
-      "protocol": "HTTP",
-      "path": "/",
       "portIndex": 1
     }
   ],

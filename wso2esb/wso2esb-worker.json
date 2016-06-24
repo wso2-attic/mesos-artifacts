@@ -6,7 +6,7 @@
   "instances": 1,
   "container": {
     "docker": {
-      "image": "wso2esb-worker:4.9.0",
+      "image": "wso2esb-worker-mesos:4.9.0",
       "network": "BRIDGE",
       "portMappings": [
         {
@@ -33,8 +33,6 @@
   },
   "healthChecks": [
     {
-      "protocol": "HTTP",
-      "path": "/",
       "portIndex": 1
     }
   ],
