@@ -7,77 +7,46 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2is:5.1.0",
+            "image": "wso2is-mesos:5.1.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
                     "containerPort": 9763,
-                    "servicePort": 10111,
+                    "servicePort": 10112,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10112,
+                    "servicePort": 10113,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 },
                 {
                     "containerPort": 8000,
-                    "servicePort": 10113,
+                    "servicePort": 10114,
                     "protocol": "tcp",
-                    "name": "kdc-server",
-                    "labels": {
-                        "VIP_2": "8000"
-                    }
+                    "name": "kdc-server"
                 },
                 {
                     "containerPort": 10500,
-                    "servicePort": 10114,
+                    "servicePort": 10115,
                     "protocol": "tcp",
-                    "name": "thrift-entitlement",
-                    "labels": {
-                        "VIP_3": "10500"
-                    }
+                    "name": "thrift-entitlement"
                 }
             ]
-        },
-        "volumes": [
-            {
-                "containerPath": "/mnt/mesos-artifacts/is",
-                "hostPath": "/mnt/mesos-artifacts/is",
-                "mode": "RW"
-            }
-        ]
+        }
     },
     "env": {
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
-    "constraints": [
-
-    ],
     "labels": {
         "environment": "dev",
         "HAPROXY_GROUP": "marathon-lb"
     },
-    "fetch": [
-
-    ],
-    "dependencies": [],
     "healthChecks": [
-
-    ],
-    "backoffSeconds": 1,
-    "backoffFactor": 1.15,
-    "maxLaunchDelaySeconds": 3600,
-    "upgradeStrategy": {
-        "minimumHealthCapacity": 0.5,
-        "maximumOverCapacity": 0.2
-    }
+        {
+            "portIndex": 1
+        }
+    ]
 }

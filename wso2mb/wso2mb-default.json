@@ -7,104 +7,64 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2mb:3.1.0",
+            "image": "wso2mb-mesos:3.1.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
                     "containerPort": 9763,
-                    "servicePort": 10121,
+                    "servicePort": 10122,
                     "protocol": "tcp",
-                    "name": "servlet-http",
-                    "labels": {
-                        "VIP_0": "9763"
-                    }
+                    "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10122,
+                    "servicePort": 10123,
                     "protocol": "tcp",
-                    "name": "servlet-https",
-                    "labels": {
-                        "VIP_1": "9443"
-                    }
+                    "name": "servlet-https"
                 },
                 {
                     "containerPort": 5672,
-                    "servicePort": 10123,
+                    "servicePort": 10124,
                     "protocol": "tcp",
-                    "name": "amqp",
-                    "labels": {
-                        "VIP_2": "5672"
-                    }
+                    "name": "amqp"
                 },
                 {
                     "containerPort": 8672,
-                    "servicePort": 10124,
+                    "servicePort": 10125,
                     "protocol": "tcp",
-                    "name": "amqp-ssl",
-                    "labels": {
-                        "VIP_3": "8672"
-                    }
+                    "name": "amqp-ssl"
                 },
                 {
                     "containerPort": 1883,
-                    "servicePort": 10125,
+                    "servicePort": 10126,
                     "protocol": "tcp",
-                    "name": "mqtt",
-                    "labels": {
-                        "VIP_4": "1883"
-                    }
+                    "name": "mqtt"
                 },
                 {
                     "containerPort": 8833,
-                    "servicePort": 10126,
+                    "servicePort": 10127,
                     "protocol": "tcp",
-                    "name": "mqtt-ssl",
-                    "labels": {
-                        "VIP_5": "8833"
-                    }
+                    "name": "mqtt-ssl"
                 },
                 {
                     "containerPort": 7611,
-                    "servicePort": 10127,
+                    "servicePort": 10128,
                     "protocol": "tcp",
-                    "name": "thrift",
-                    "labels": {
-                        "VIP_6": "7611"
-                    }
+                    "name": "thrift"
                 }
             ]
-        },
-        "volumes": [
-            {
-                "containerPath": "/mnt/mesos-artifacts/mb",
-                "hostPath": "/mnt/mesos-artifacts/mb",
-                "mode": "RW"
-            }
-        ]
+        }
     },
     "env": {
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
-    "constraints": [
-
-    ],
     "labels": {
         "environment": "dev",
         "HAPROXY_GROUP": "marathon-lb"
     },
-    "fetch": [
-
-    ],
-    "dependencies": [],
     "healthChecks": [
-
-    ],
-    "backoffSeconds": 1,
-    "backoffFactor": 1.15,
-    "maxLaunchDelaySeconds": 3600,
-    "upgradeStrategy": {
-        "minimumHealthCapacity": 0.5,
-        "maximumOverCapacity": 0.2
-    }
+        {
+            "portIndex": 1
+        }
+    ]
 }
