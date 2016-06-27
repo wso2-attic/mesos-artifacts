@@ -18,54 +18,85 @@
 # ------------------------------------------------------------------------
 
 set -e
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-manager_service_port=32095
-worker_service_port=32093
-default_service_port=32093
-marathon_lb_port=9090
-marathon_endpoint="http://m1.dcos:8080/v2"
+wso2esb_manager_service_port=10093
+wso2esb_worker_service_port=10095
+wso2esb_default_service_port=10095
+mysql_gov_db_service_port=10000
+mysql_user_db_service_port=10001
+mysql_esb_db_service_port=10091
 
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "${self_path}/../common/scripts/base.sh"
+function deploy_base_services() {
+  if ! bash ${mesos_artifacts_home}/common/marathon-lb/deploy.sh; then
+    echoError "Non-zero exit code returned when deploying marathon-lb"
+    exit 1
+  fi
+  if ! bash ${mesos_artifacts_home}/common/wso2-shared-dbs/deploy.sh; then
+    echoError "Non-zero exit code returned when deploying WSO2 shared databases"
+    exit 1
+  fi
+  if ! deploy 'mysql-esb-db' ${self_path}/mysql-esb-db.json; then
+    echoError "Non-zero exit code returned when deploying mysql-esb-db"
+    exit 1
+  fi
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+  waitUntilServiceIsActive 'mysql-gov-db' $mysql_gov_db_service_port
+  waitUntilServiceIsActive 'mysql-user-db' $mysql_user_db_service_port
+  waitUntilServiceIsActive 'mysql-esb-db' $mysql_esb_db_service_port
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-esb-db.json
+function deploy_distributed() {
+  echoBold "Deploying WSO2 ESB distributed cluster on Mesos..."
+  deploy_base_services
+  if ! deploy 'wso2esb-manager' $self_path/wso2esb-manager.json; then
+    echoError "Non-zero exit code returned when deploying wso2esb-manager"
+    exit 1
+  fi
+  waitUntilServiceIsActive 'wso2esb-manager' $wso2esb_manager_service_port
+  echoBold "wso2esb-manager management console: https://${marathon_lb_host_ip}:${wso2esb_manager_service_port}/carbon"
 
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
+  if ! deploy 'wso2esb-worker' $self_path/wso2esb-worker.json; then
+      echoError "Non-zero exit code returned when deploying wso2esb-worker"
+      exit 1
+  fi
+  waitUntilServiceIsActive 'wso2esb-worker' $wso2esb_worker_service_port
+  echoSuccess "Successfully deployed WSO2 ESB distributed cluster on Mesos"
+}
 
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
+function deploy_default() {
+  echoBold "Deploying WSO2 ESB default setup on Mesos..."
+  deploy_base_services
+  if ! deploy 'wso2esb-default' $self_path/wso2esb-default.json; then
+    echoError "Non-zero exit code returned when deploying wso2esb-default"
+    exit 1
+  fi
+  echoBold "wso2esb-default management console: https://${marathon_lb_host_ip}:${wso2esb_default_service_port}/carbon"
+  waitUntilServiceIsActive 'wso2esb-default' $wso2esb_default_service_port
+  echoSuccess "Successfully deployed WSO2 ESB default setup on Mesos"
+}
 
-echo "Waiting for mysql-esb-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-esb-db started successfully"
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          d)
+              deployment_pattern="distributed"
+              ;;
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
 
-deploy ${marathon_endpoint} ${self_path}/wso2esb-manager.json
-echo "Waiting for wso2esb-manager to launch on a1.dcos:10096..."
-while ! nc -z a1.dcos 10096; do
-  sleep 0.1
-done
-echo "wso2esb-manager started successfully: https://wso2esb-manager:10096/carbon"
-
-deploy ${marathon_endpoint} ${self_path}/wso2esb-worker.json
-echo "Waiting for wso2esb-worker to launch on a1.dcos:10094..."
-while ! nc -z a1.dcos 10091; do
-  sleep 0.1
-done
-echo "wso2esb-worker started successfully: http://wso2esb-worker:10091/services/"
+  if [[ $deployment_pattern == "distributed" ]]; then
+      deploy_distributed
+  else
+      deploy_default
+  fi
+}
+main "$@"
