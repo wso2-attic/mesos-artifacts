@@ -11,6 +11,12 @@
             "network": "BRIDGE",
             "portMappings": [
                 {
+                    "name": "hazelcast",
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                },
+                {
                     "containerPort": 9763,
                     "servicePort": 10122,
                     "protocol": "tcp",
