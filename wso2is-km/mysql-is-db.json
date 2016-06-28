@@ -1,0 +1,45 @@
+{
+  "id": "mysql-is-db",
+  "cmd": null,
+  "cpus": 0.25,
+  "mem": 128,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "mysql:5.5",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "servicePort": 10141,
+          "protocol": "tcp",
+          "name": null,
+          "labels": {
+            "VIP_0": "3306"
+          }
+        }
+      ]
+    },
+    "type": "DOCKER"
+  },
+  "env": {
+    "MYSQL_ROOT_PASSWORD": "root",
+    "MYSQL_DATABASE": "IS_DB",
+    "MYSQL_USER": "wso2carbon",
+    "MYSQL_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}
