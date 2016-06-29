@@ -51,9 +51,9 @@ while ! nc -z a1.dcos 10141; do
 done
 echo "mysql-is-db started successfully"
 
-deploy ${marathon_endpoint} ${self_path}/wso2is-km-default.json
-echo "Waiting for wso2is-km-default to launch on a1.dcos:10143..."
+deploy ${marathon_endpoint} ${self_path}/wso2is_km-default.json
+echo "Waiting for wso2is_km-default to launch on a1.dcos:10143..."
 while ! nc -z a1.dcos 10143; do
   sleep 0.1
 done
-echo "wso2is-km-default started successfully: https://wso2is-km-default:10143/carbon"
+echo "wso2is_km-default started successfully: https://wso2is_km-default:10143/carbon"

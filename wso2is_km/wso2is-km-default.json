@@ -1,5 +1,5 @@
 {
-    "id": "wso2is-km-default",
+    "id": "wso2is_km-default",
     "cpus": 0.5,
     "mem": 800.0,
     "instances": 1,
@@ -7,7 +7,7 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "wso2is-km-mesos:5.1.0",
+            "image": "wso2is_km-mesos:5.1.0",
             "network": "BRIDGE",
             "portMappings": [
                 {
