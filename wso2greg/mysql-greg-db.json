@@ -12,7 +12,7 @@
       "portMappings": [
         {
           "containerPort": 3306,
-          "servicePort": 10101,
+          "hostPort": 10101,
           "protocol": "tcp",
           "name": null,
           "labels": {
