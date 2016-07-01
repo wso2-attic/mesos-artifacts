@@ -23,6 +23,11 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 function undeploy_product() {
   undeploy wso2am-default
+  undeploy wso2am-api-key-manager
+  undeploy wso2am-api-publisher
+  undeploy wso2am-api-store
+  undeploy wso2am-gateway-manager
+  undeploy wso2am-gateway-worker
   undeploy mysql-apim-db
 }
 
