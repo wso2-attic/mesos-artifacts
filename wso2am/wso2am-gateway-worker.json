@@ -52,7 +52,7 @@
     },
     "healthChecks": [
         {
-            "portIndex": 1
+            "portIndex": 3
         }
     ]
 }

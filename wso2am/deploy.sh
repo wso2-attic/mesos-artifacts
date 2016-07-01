@@ -18,70 +18,111 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+wso2am_default_service_port=10010
+wso2am_api_key_manager_service_port=10007
+wso2am_api_publisher_service_port=10009
+wso2am_api_store_service_port=10011
+wso2am_gateway_manager_service_port=10015
+wso2am_gateway_worker_service_port=10019
+mysql_gov_db_service_port=10000
+mysql_user_db_service_port=10001
+mysql_am_db_service_port=10006
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_base_services() {
+  if ! bash ${mesos_artifacts_home}/common/marathon-lb/deploy.sh; then
+    echoError "Non-zero exit code returned when deploying marathon-lb"
+    exit 1
+  fi
+  if ! bash ${mesos_artifacts_home}/common/wso2-shared-dbs/deploy.sh; then
+    echoError "Non-zero exit code returned when deploying WSO2 shared databases"
+    exit 1
+  fi
+  if ! deploy 'mysql-am-db' ${self_path}/mysql-apim-db.json; then
+    echoError "Non-zero exit code returned when deploying mysql-am-db"
+    exit 1
+  fi
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-apim-db.json
+  waitUntilServiceIsActive 'mysql-gov-db' $mysql_gov_db_service_port
+  waitUntilServiceIsActive 'mysql-user-db' $mysql_user_db_service_port
+  waitUntilServiceIsActive 'mysql-am-db' $mysql_am_db_service_port
+}
 
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
+function deploy_default() {
+  echoBold "Deploying WSO2 AM default setup on Mesos..."
+  deploy_base_services
+  if ! deploy 'wso2am-default' $self_path/wso2am-default.json; then
+    echoError "Non-zero exit code returned when deploying wso2am-default"
+    exit 1
+  fi
+  echoBold "wso2am-default management console: https://${marathon_lb_host_ip}:${wso2am_default_service_port}/carbon"
+  waitUntilServiceIsActive 'wso2am-default' $wso2am_default_service_port
+  echoSuccess "Successfully deployed WSO2 AM default setup on Mesos"
+}
 
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
+function deploy_distributed() {
+  echoBold "Deploying WSO2 AM distributed cluster on Mesos..."
+  deploy_base_services
+  if ! deploy 'wso2am-api-key-manager' $self_path/wso2am-api-key-manager.json; then
+    echoError "Non-zero exit code returned when deploying wso2am-api-key-manager"
+    exit 1
+  fi
+  waitUntilServiceIsActive 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
+  echoBold "wso2am-api-key-manager successfully started"
 
-echo "Waiting for mysql-apim-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-apim-db started successfully"
+  if ! deploy 'wso2am-api-store' $self_path/wso2am-api-store.json; then
+    echoError "Non-zero exit code returned when deploying wso2am-api-store"
+    exit 1
+  fi
+  waitUntilServiceIsActive 'wso2am-api-store' $wso2am_api_store_service_port
+  echoBold "wso2am-api-store successfully started"
 
-deploy ${marathon_endpoint} ${self_path}/wso2am-api-key-manager.json
-echo "Waiting for api-key-manager to launch on a1.dcos:10007..."
-while ! nc -z a1.dcos 10007; do
-sleep 0.1
-done
-echo "wso2am-api-key-manager started successfully: https://wso2am-api-key-manager:10007/carbon"
+  if ! deploy 'wso2am-api-publisher' $self_path/wso2am-api-publisher.json; then
+    echoError "Non-zero exit code returned when deploying wso2am-api-publisher"
+    exit 1
+  fi
+  waitUntilServiceIsActive 'wso2am-api-publisher' $wso2am_api_publisher_service_port
+  echoBold "wso2am-api-publisher successfully started"
 
-deploy ${marathon_endpoint} ${self_path}/wso2am-api-publisher.json
-echo "Waiting for wso2am-api-publisher to launch on a1.dcos:10009..."
-while ! nc -z a1.dcos 10009; do
- sleep 0.1
-done
-echo "wso2am-api-publisher started successfully: https://wso2am-api-publisher:10009/publisher"
+  if ! deploy 'wso2am-gateway-manager' $self_path/wso2am-gateway-manager.json; then
+    echoError "Non-zero exit code returned when deploying wso2am-gateway-manager"
+    exit 1
+  fi
+  waitUntilServiceIsActive 'wso2am-gateway-manager' $wso2am_gateway_manager_service_port
+  echoBold "wso2am-gateway-manager successfully started"
 
-deploy ${marathon_endpoint} ${self_path}/wso2am-api-store.json
-echo "Waiting for wso2am-api-store to launch on a1.dcos:10011..."
-while ! nc -z a1.dcos 10011; do
- sleep 0.1
-done
-echo "wso2am-api-store started successfully: https://wso2am-api-store:10011/store"
+#  if ! deploy 'wso2am-gateway-worker' $self_path/wso2am-gateway-worker.json; then
+#    echoError "Non-zero exit code returned when deploying wso2am-gateway-worker"
+#    exit 1
+#  fi
+#  waitUntilServiceIsActive 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
+#  echoBold "wso2am-gateway-worker successfully started"
 
-deploy ${marathon_endpoint} ${self_path}/wso2am-gateway-manager.json
-echo "Waiting for wso2am-gateway-manager to launch on a1.dcos:10015..."
-while ! nc -z a1.dcos 10015; do
- sleep 0.1
-done
-echo "wso2am-gateway-manager started successfully: https://wso2am-gateway-manager:10015/carbon"
+  echoSuccess "Successfully deployed WSO2 AM distributed cluster on Mesos"
+}
 
-deploy ${marathon_endpoint} ${self_path}/wso2am-gateway-worker.json
-echo "Waiting for wso2am-gateway-worker to launch on a1.dcos:10019..."
-while ! nc -z a1.dcos 10019; do
- sleep 0.1
-done
-echo "wso2am-gateway-worker started successfully: https://wso2am-gateway-worker:10019/"
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          d)
+              deployment_pattern="distributed"
+              ;;
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
+
+  if [[ $deployment_pattern == "distributed" ]]; then
+      deploy_distributed
+  else
+      deploy_default
+  fi
+}
+main "$@"
