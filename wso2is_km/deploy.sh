@@ -18,42 +18,34 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+mysql_is_km_db_service_port=10141
+wso2is_km_default_service_port=10143
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_default() {
+  echoBold "Deploying WSO2 IS KM default setup on Mesos..."
+  deploy_common_services
+  deploy_wso2_service 'mysql-is_km-db' $mysql_is_km_db_service_port
+  deploy_wso2_service 'wso2is_km-default' $wso2is_km_default_service_port
+  echoBold "wso2is_km-default management console: https://${marathon_lb_host_ip}:${wso2is_km_default_service_port}/carbon"
+  echoSuccess "Successfully deployed WSO2 IS KM default setup on Mesos"
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-is-db.json
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
+  deploy_default
+}
+main "$@"
 
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
-
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
-
-echo "Waiting for mysql-is-db to launch on a1.dcos:10141..."
-while ! nc -z a1.dcos 10141; do
-  sleep 0.1
-done
-echo "mysql-is-db started successfully"
-
-deploy ${marathon_endpoint} ${self_path}/wso2is_km-default.json
-echo "Waiting for wso2is_km-default to launch on a1.dcos:10143..."
-while ! nc -z a1.dcos 10143; do
-  sleep 0.1
-done
-echo "wso2is_km-default started successfully: https://wso2is_km-default:10143/carbon"

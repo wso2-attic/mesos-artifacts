@@ -18,50 +18,35 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+mysql_greg_db_service_port=10131
+mysql_greg_apim_db_service_port=10132
+wso2greg_pubstore_default_service_port=10134
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_default() {
+  echoBold "Deploying WSO2 GREG-PUBSTORE default setup on Mesos..."
+  deploy_common_services
+  deploy_wso2_service 'mysql-greg-db' $mysql_greg_db_service_port
+  deploy_wso2_service 'mysql-greg-apim-db' $mysql_greg_apim_db_service_port
+  deploy_wso2_service 'wso2greg-pubstore-default' $wso2greg_pubstore_default_service_port
+  echoBold "wso2greg-pubstore-default management console: https://${marathon_lb_host_ip}:${wso2greg_pubstore_default_service_port}/carbon"
+  echoSuccess "Successfully deployed WSO2 GREG-PUBSTORE default setup on Mesos"
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-greg-db.json
-deploy ${marathon_endpoint} ${self_path}/mysql-greg-apim-db.json
-
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
-
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
-
-echo "Waiting for mysql-greg-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-greg-db started successfully"
-
-echo "Waiting for mysql-greg-apim-db to launch on a1.dcos:10003..."
-while ! nc -z a1.dcos 10003; do
-  sleep 0.1
-done
-echo "mysql-greg-apim-db started successfully"
-
-deploy ${marathon_endpoint} ${self_path}/wso2greg-pubstore-default.json
-echo "Waiting for wso2greg-pubstore-default to launch on a1.dcos:10102..."
-while ! nc -z a1.dcos 10102; do
- sleep 0.1
-done
-echo "wso2greg-pubstore-default started successfully: https://wso2greg-pubstore-default:10102/carbon"
-
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
+  deploy_default
+}
+main "$@"

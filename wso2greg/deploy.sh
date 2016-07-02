@@ -17,50 +17,56 @@
 
 # ------------------------------------------------------------------------
 
+
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+mysql_greg_db_service_port=10101
+wso2greg_store_service_port=10105
+wso2greg_publisher_service_port=10103
+wso2greg_default_service_port=10103
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_distributed() {
+  echoBold "Deploying WSO2 GREG distributed cluster on Mesos..."
+  deploy_common_services
+  deploy_wso2_service 'mysql-greg-db' $mysql_greg_db_service_port
+  deploy_wso2_service 'wso2greg-store' $wso2greg_store_service_port
+  echoBold "wso2greg-store management console: https://${marathon_lb_host_ip}:${wso2greg_store_service_port}/store"
+  deploy_wso2_service 'wso2greg-publisher' $wso2greg_publisher_service_port
+  echoBold "wso2greg-publisher management console: https://${marathon_lb_host_ip}:${wso2greg_publisher_service_port}/publisher"
+  echoSuccess "Successfully deployed WSO2 GREG distributed cluster on Mesos"
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-greg-db.json
+function deploy_default() {
+  echoBold "Deploying WSO2 GREG default setup on Mesos..."
+  deploy_common_services
+  deploy_wso2_service 'mysql-greg-db' $mysql_greg_db_service_port
+  deploy_wso2_service 'wso2greg-default' $wso2greg_default_service_port
+  echoBold "wso2greg-default management console: https://${marathon_lb_host_ip}:${wso2greg_default_service_port}/carbon"
+  echoSuccess "Successfully deployed WSO2 GREG default setup on Mesos"
+}
 
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          d)
+              deployment_pattern="distributed"
+              ;;
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
 
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
-
-echo "Waiting for mysql-greg-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-greg-db started successfully"
-
-deploy ${marathon_endpoint} ${self_path}/wso2greg-publisher.json
-echo "Waiting for wso2greg-publisher to launch on a1.dcos:10102..."
-while ! nc -z a1.dcos 10102; do
- sleep 0.1
-done
-echo "wso2greg-publisher started successfully: https://wso2greg-publisher:10102/carbon"
-
-deploy ${marathon_endpoint} ${self_path}/wso2greg-store.json
-echo "Waiting for wso2greg-store to launch on a1.dcos:10104..."
-while ! nc -z a1.dcos 10104; do
- sleep 0.1
-done
-echo "wso2greg-store started successfully: https://wso2greg-store:10104/"
+  if [[ $deployment_pattern == "distributed" ]]; then
+      deploy_distributed
+  else
+      deploy_default
+  fi
+}
+main "$@"
