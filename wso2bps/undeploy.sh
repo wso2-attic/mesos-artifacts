@@ -18,12 +18,39 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-undeploy ${marathon_endpoint} wso2bps-manager
-undeploy ${marathon_endpoint} wso2bps-worker
-undeploy ${marathon_endpoint} mysql-bps-db
-bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
-bash ${self_path}/../common/marathon-lb/undeploy.sh
+function undeploy_product() {
+  undeploy wso2bps-default
+  undeploy wso2bps-worker
+  undeploy wso2bps-manager
+  undeploy mysql-bps-db
+}
+
+function full_purge() {
+  undeploy_product
+  bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
+  bash ${self_path}/../common/marathon-lb/undeploy.sh
+}
+
+function main() {
+  full_purge=false
+  while getopts :f FLAG; do
+      case $FLAG in
+          f)
+              full_purge=true
+              ;;
+      esac
+  done
+
+  if [[ $full_purge == true ]]; then
+    echo "Purging WSO2 BPS deployment..."
+    full_purge
+  else
+    echo "Undeploying WSO2 BPS product..."
+    undeploy_product
+  fi
+}
+main "$@"
