@@ -22,7 +22,7 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_am_db_service_port=10006
+mysql_apim_db_service_port=10006
 wso2am_default_service_port=10010
 wso2am_api_key_manager_service_port=10008
 wso2am_api_publisher_service_port=10010
@@ -33,7 +33,7 @@ wso2am_gateway_worker_service_port=10020
 function deploy_distributed() {
   echoBold "Deploying WSO2 APIM distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-am-db' $mysql_am_db_service_port
+  deploy_wso2_service 'mysql-apim-db' $mysql_apim_db_service_port
   deploy_wso2_service 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
   echoBold "wso2am-api-key-manager management console: https://${marathon_lb_host_ip}:${wso2am_api_key_manager_service_port}/carbon"
   deploy_wso2_service 'wso2am_api_store' $wso2am_api_store_service_port
@@ -49,7 +49,7 @@ function deploy_distributed() {
 function deploy_default() {
   echoBold "Deploying WSO2 APIM default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-am-db' $mysql_am_db_service_port
+  deploy_wso2_service 'mysql-apim-db' $mysql_apim_db_service_port
   deploy_wso2_service 'wso2am-default' $wso2am_default_service_port
   echoBold "wso2am-default management console: https://${marathon_lb_host_ip}:${wso2am_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 APIM default setup on Mesos"
