@@ -30,18 +30,18 @@ wso2bps_default_service_port=10033
 function deploy_distributed() {
   echoBold "Deploying WSO2 BPS distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-bps-db' $mysql_bps_db_service_port
-  deploy_wso2_service 'wso2bps-manager' $wso2bps_manager_service_port
+  deploy_service 'mysql-bps-db' $mysql_bps_db_service_port
+  deploy_service 'wso2bps-manager' $wso2bps_manager_service_port
   echoBold "wso2bps-manager management console: https://${marathon_lb_host_ip}:${wso2bps_manager_service_port}/carbon"
-  deploy_wso2_service 'wso2bps-worker' $wso2bps_worker_service_port
+  deploy_service 'wso2bps-worker' $wso2bps_worker_service_port
   echoSuccess "Successfully deployed WSO2 BPS distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 BPS default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-bps-db' $mysql_bps_db_service_port
-  deploy_wso2_service 'wso2bps-default' $wso2bps_default_service_port
+  deploy_service 'mysql-bps-db' $mysql_bps_db_service_port
+  deploy_service 'wso2bps-default' $wso2bps_default_service_port
   echoBold "wso2bps-default management console: https://${marathon_lb_host_ip}:${wso2bps_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 BPS default setup on Mesos"
 }

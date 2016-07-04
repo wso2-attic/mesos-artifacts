@@ -30,18 +30,18 @@ wso2esb_default_service_port=10095
 function deploy_distributed() {
   echoBold "Deploying WSO2 ESB distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-esb-db' $mysql_esb_db_service_port
-  deploy_wso2_service 'wso2esb-manager' $wso2esb_manager_service_port
+  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
+  deploy_service 'wso2esb-manager' $wso2esb_manager_service_port
   echoBold "wso2esb-manager management console: https://${marathon_lb_host_ip}:${wso2esb_manager_service_port}/carbon"
-  deploy_wso2_service 'wso2esb-worker' $wso2esb_worker_service_port
+  deploy_service 'wso2esb-worker' $wso2esb_worker_service_port
   echoSuccess "Successfully deployed WSO2 ESB distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 ESB default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-esb-db' $mysql_esb_db_service_port
-  deploy_wso2_service 'wso2esb-default' $wso2esb_default_service_port
+  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
+  deploy_service 'wso2esb-default' $wso2esb_default_service_port
   echoBold "wso2esb-default management console: https://${marathon_lb_host_ip}:${wso2esb_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 ESB default setup on Mesos"
 }

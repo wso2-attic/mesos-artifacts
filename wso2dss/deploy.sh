@@ -30,18 +30,18 @@ wso2dss_default_service_port=10073
 function deploy_distributed() {
   echoBold "Deploying WSO2 DSS distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-dss-db' $mysql_dss_db_service_port
-  deploy_wso2_service 'wso2dss-manager' $wso2dss_manager_service_port
+  deploy_service 'mysql-dss-db' $mysql_dss_db_service_port
+  deploy_service 'wso2dss-manager' $wso2dss_manager_service_port
   echoBold "wso2dss-manager management console: https://${marathon_lb_host_ip}:${wso2dss_manager_service_port}/carbon"
-  deploy_wso2_service 'wso2dss-worker' $wso2dss_worker_service_port
+  deploy_service 'wso2dss-worker' $wso2dss_worker_service_port
   echoSuccess "Successfully deployed WSO2 DSS distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 DSS default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-dss-db' $mysql_dss_db_service_port
-  deploy_wso2_service 'wso2dss-default' $wso2dss_default_service_port
+  deploy_service 'mysql-dss-db' $mysql_dss_db_service_port
+  deploy_service 'wso2dss-default' $wso2dss_default_service_port
   echoBold "wso2dss-default management console: https://${marathon_lb_host_ip}:${wso2dss_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 DSS default setup on Mesos"
 }

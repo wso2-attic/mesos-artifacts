@@ -30,10 +30,10 @@ wso2es_default_service_port=10085
 function deploy_distributed() {
   echoBold "Deploying WSO2 ES distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-es-db' $mysql_es_db_service_port
-  deploy_wso2_service 'wso2es-store' $wso2es_store_service_port
+  deploy_service 'mysql-es-db' $mysql_es_db_service_port
+  deploy_service 'wso2es-store' $wso2es_store_service_port
   echoBold "wso2es-store management console: https://${marathon_lb_host_ip}:${wso2es_store_service_port}/store"
-  deploy_wso2_service 'wso2es-publisher' $wso2es_publisher_service_port
+  deploy_service 'wso2es-publisher' $wso2es_publisher_service_port
   echoBold "wso2es-publisher management console: https://${marathon_lb_host_ip}:${wso2es_publisher_service_port}/publisher"
   echoSuccess "Successfully deployed WSO2 ES distributed cluster on Mesos"
 }
@@ -41,8 +41,8 @@ function deploy_distributed() {
 function deploy_default() {
   echoBold "Deploying WSO2 ES default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-es-db' $mysql_es_db_service_port
-  deploy_wso2_service 'wso2es-default' $wso2es_default_service_port
+  deploy_service 'mysql-es-db' $mysql_es_db_service_port
+  deploy_service 'wso2es-default' $wso2es_default_service_port
   echoBold "wso2es-default management console: https://${marathon_lb_host_ip}:${wso2es_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 ES default setup on Mesos"
 }

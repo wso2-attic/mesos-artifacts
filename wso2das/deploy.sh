@@ -28,8 +28,8 @@ wso2das_default_service_port=10063
 function deploy_default() {
   echoBold "Deploying WSO2 DAS default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-das-db' $mysql_das_db_service_port
-  deploy_wso2_service 'wso2das-default' $wso2das_default_service_port
+  deploy_service 'mysql-das-db' $mysql_das_db_service_port
+  deploy_service 'wso2das-default' $wso2das_default_service_port
   echoBold "wso2das-default management console: https://${marathon_lb_host_ip}:${wso2das_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 DAS default setup on Mesos"
 }

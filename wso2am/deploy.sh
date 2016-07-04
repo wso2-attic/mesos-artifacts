@@ -33,24 +33,24 @@ wso2am_gateway_worker_service_port=10020
 function deploy_distributed() {
   echoBold "Deploying WSO2 APIM distributed cluster on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-apim-db' $mysql_apim_db_service_port
-  deploy_wso2_service 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
+  deploy_service 'mysql-apim-db' $mysql_apim_db_service_port
+  deploy_service 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
   echoBold "wso2am-api-key-manager management console: https://${marathon_lb_host_ip}:${wso2am_api_key_manager_service_port}/carbon"
-  deploy_wso2_service 'wso2am_api_store' $wso2am_api_store_service_port
+  deploy_service 'wso2am_api_store' $wso2am_api_store_service_port
   echoBold "wso2am_api_store management console: https://${marathon_lb_host_ip}:${wso2am_api_store_service_port}/store"
-	deploy_wso2_service 'wso2am_api_publisher' $wso2am_api_publisher_service_port
-	echoBold "wso2am_api_publisher management console: https://${marathon_lb_host_ip}:${wso2am_api_publisher_service_port}/publisher"
-	deploy_wso2_service 'wso2am_gateway_manager' $wso2am_gateway_manager_service_port
-	echoBold "wso2am_gateway_manager management console: https://${marathon_lb_host_ip}:${wso2am_gateway_manager_service_port}/carbon"
-	deploy_wso2_service 'wso2am_gateway_worker' $wso2am_gateway_worker_service_port
+  deploy_service 'wso2am_api_publisher' $wso2am_api_publisher_service_port
+  echoBold "wso2am_api_publisher management console: https://${marathon_lb_host_ip}:${wso2am_api_publisher_service_port}/publisher"
+  deploy_service 'wso2am_gateway_manager' $wso2am_gateway_manager_service_port
+  echoBold "wso2am_gateway_manager management console: https://${marathon_lb_host_ip}:${wso2am_gateway_manager_service_port}/carbon"
+  deploy_service 'wso2am_gateway_worker' $wso2am_gateway_worker_service_port
   echoSuccess "Successfully deployed WSO2 APIM distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 APIM default setup on Mesos..."
   deploy_common_services
-  deploy_wso2_service 'mysql-apim-db' $mysql_apim_db_service_port
-  deploy_wso2_service 'wso2am-default' $wso2am_default_service_port
+  deploy_service 'mysql-apim-db' $mysql_apim_db_service_port
+  deploy_service 'wso2am-default' $wso2am_default_service_port
   echoBold "wso2am-default management console: https://${marathon_lb_host_ip}:${wso2am_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 APIM default setup on Mesos"
 }
