@@ -41,14 +41,14 @@ function deploy_base_services() {
     echoError "Non-zero exit code returned when deploying WSO2 shared databases"
     exit 1
   fi
-  if ! deploy 'mysql-am-db' ${self_path}/mysql-apim-db.json; then
-    echoError "Non-zero exit code returned when deploying mysql-am-db"
+  if ! deploy 'mysql-apim-db' ${self_path}/mysql-apim-db.json; then
+    echoError "Non-zero exit code returned when deploying mysql-apim-db"
     exit 1
   fi
 
   waitUntilServiceIsActive 'mysql-gov-db' $mysql_gov_db_service_port
   waitUntilServiceIsActive 'mysql-user-db' $mysql_user_db_service_port
-  waitUntilServiceIsActive 'mysql-am-db' $mysql_am_db_service_port
+  waitUntilServiceIsActive 'mysql-apim-db' $mysql_am_db_service_port
 }
 
 function deploy_default() {
