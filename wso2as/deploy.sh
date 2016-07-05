@@ -32,7 +32,7 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-as-db' $mysql_as_db_service_port
   deploy_service 'wso2as-manager' $wso2as_manager_service_port
-  echoBold "wso2as-manager management console: https://${marathon_lb_host_ip}:${wso2as_manager_service_port}/carbon"
+  echoBold "wso2as-manager management console: https://${host_ip}:${wso2as_manager_service_port}/carbon"
   deploy_service 'wso2as-worker' $wso2as_worker_service_port
   echoSuccess "Successfully deployed WSO2 AS distributed cluster on Mesos"
 }
@@ -42,7 +42,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-as-db' $mysql_as_db_service_port
   deploy_service 'wso2as-default' $wso2as_default_service_port
-  echoBold "wso2as-default management console: https://${marathon_lb_host_ip}:${wso2as_default_service_port}/carbon"
+  echoBold "wso2as-default management console: https://${host_ip}:${wso2as_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 AS default setup on Mesos"
 }
 

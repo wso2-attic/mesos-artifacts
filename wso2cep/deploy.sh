@@ -32,7 +32,7 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-cep-db' $mysql_cep_db_service_port
   deploy_service 'wso2cep-presenter' $wso2cep_presenter_service_port
-  echoBold "wso2cep-presenter management console: https://${marathon_lb_host_ip}:${wso2cep_presenter_service_port}/carbon"
+  echoBold "wso2cep-presenter management console: https://${host_ip}:${wso2cep_presenter_service_port}/carbon"
   deploy_service 'wso2cep-worker' $wso2cep_worker_service_port
   echoSuccess "Successfully deployed WSO2 CEP distributed cluster on Mesos"
 }
@@ -42,7 +42,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-cep-db' $mysql_cep_db_service_port
   deploy_service 'wso2cep-default' $wso2cep_default_service_port
-  echoBold "wso2cep-default management console: https://${marathon_lb_host_ip}:${wso2cep_default_service_port}/carbon"
+  echoBold "wso2cep-default management console: https://${host_ip}:${wso2cep_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 CEP default setup on Mesos"
 }
 

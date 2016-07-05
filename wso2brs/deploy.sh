@@ -32,7 +32,7 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-brs-db' $mysql_brs_db_service_port
   deploy_service 'wso2brs-manager' $wso2brs_manager_service_port
-  echoBold "wso2brs-manager management console: https://${marathon_lb_host_ip}:${wso2brs_manager_service_port}/carbon"
+  echoBold "wso2brs-manager management console: https://${host_ip}:${wso2brs_manager_service_port}/carbon"
   deploy_service 'wso2brs-worker' $wso2brs_worker_service_port
   echoSuccess "Successfully deployed WSO2 BRS distributed cluster on Mesos"
 }
@@ -42,7 +42,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-brs-db' $mysql_brs_db_service_port
   deploy_service 'wso2brs-default' $wso2brs_default_service_port
-  echoBold "wso2brs-default management console: https://${marathon_lb_host_ip}:${wso2brs_default_service_port}/carbon"
+  echoBold "wso2brs-default management console: https://${host_ip}:${wso2brs_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 BRS default setup on Mesos"
 }
 

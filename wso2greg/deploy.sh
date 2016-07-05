@@ -33,9 +33,9 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-greg-db' $mysql_greg_db_service_port
   deploy_service 'wso2greg-store' $wso2greg_store_service_port
-  echoBold "wso2greg-store management console: https://${marathon_lb_host_ip}:${wso2greg_store_service_port}/store"
+  echoBold "wso2greg-store management console: https://${host_ip}:${wso2greg_store_service_port}/store"
   deploy_service 'wso2greg-publisher' $wso2greg_publisher_service_port
-  echoBold "wso2greg-publisher management console: https://${marathon_lb_host_ip}:${wso2greg_publisher_service_port}/publisher"
+  echoBold "wso2greg-publisher management console: https://${host_ip}:${wso2greg_publisher_service_port}/publisher"
   echoSuccess "Successfully deployed WSO2 GREG distributed cluster on Mesos"
 }
 
@@ -44,7 +44,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-greg-db' $mysql_greg_db_service_port
   deploy_service 'wso2greg-default' $wso2greg_default_service_port
-  echoBold "wso2greg-default management console: https://${marathon_lb_host_ip}:${wso2greg_default_service_port}/carbon"
+  echoBold "wso2greg-default management console: https://${host_ip}:${wso2greg_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 GREG default setup on Mesos"
 }
 

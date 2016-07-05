@@ -32,7 +32,7 @@ function deploy_default() {
   deploy_service 'mysql-greg-db' $mysql_greg_db_service_port
   deploy_service 'mysql-greg-apim-db' $mysql_greg_apim_db_service_port
   deploy_service 'wso2greg-pubstore-default' $wso2greg_pubstore_default_service_port
-  echoBold "wso2greg-pubstore-default management console: https://${marathon_lb_host_ip}:${wso2greg_pubstore_default_service_port}/carbon"
+  echoBold "wso2greg-pubstore-default management console: https://${host_ip}:${wso2greg_pubstore_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 GREG-PUBSTORE default setup on Mesos"
 }
 
