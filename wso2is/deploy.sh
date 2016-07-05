@@ -18,42 +18,33 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+mysql_is_db_service_port=10111
+wso2is_default_service_port=10113
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_default() {
+  echoBold "Deploying WSO2 IS default setup on Mesos..."
+  deploy_common_services
+  deploy_service 'mysql-is-db' $mysql_is_db_service_port
+  deploy_service 'wso2is-default' $wso2is_default_service_port
+  echoBold "wso2is-default management console: https://${host_ip}:${wso2is_default_service_port}/carbon"
+  echoSuccess "Successfully deployed WSO2 IS default setup on Mesos"
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-is-db.json
-
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
-
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
-
-echo "Waiting for mysql-is-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-is-db started successfully"
-
-deploy ${marathon_endpoint} ${self_path}/wso2is-default.json
-echo "Waiting for wso2is-default to launch on a1.dcos:10112..."
-while ! nc -z a1.dcos 10112; do
-  sleep 0.1
-done
-echo "wso2is-default started successfully: https://wso2is-default:10112/carbon"
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
+  deploy_default
+}
+main "$@"

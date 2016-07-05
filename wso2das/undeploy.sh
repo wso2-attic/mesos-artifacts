@@ -18,11 +18,37 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-undeploy ${marathon_endpoint} wso2das-default
-undeploy ${marathon_endpoint} mysql-das-db
-bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
-bash ${self_path}/../common/marathon-lb/undeploy.sh
+function undeploy_product() {
+  undeploy wso2das-default
+  undeploy mysql-das-db
+}
+
+function full_purge() {
+  undeploy_product
+  bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
+  bash ${self_path}/../common/marathon-lb/undeploy.sh
+}
+
+function main() {
+  full_purge=false
+  while getopts :f FLAG; do
+      case $FLAG in
+          f)
+              full_purge=true
+              ;;
+      esac
+  done
+
+  if [[ $full_purge == true ]]; then
+    echo "Purging WSO2 DAS deployment..."
+    full_purge
+  else
+    echo "Undeploying WSO2 DAS product..."
+    undeploy_product
+  fi
+}
+main "$@"
