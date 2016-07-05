@@ -44,8 +44,8 @@ function deploy_distributed() {
   echoBold "wso2am-api-publisher management console: http://${host_ip}:${wso2am_api_publisher_service_port}/publisher"
   deploy_service 'wso2am-gateway-manager' $wso2am_gateway_manager_service_port
   echoBold "wso2am-gateway-manager management console: http://${host_ip}:${wso2am_gateway_manager_service_port}/carbon"
-  deploy_service 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
-  echoSuccess "Successfully deployed WSO2 APIM distributed cluster on Mesos"
+  # deploy_service 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
+  # echoSuccess "Successfully deployed WSO2 APIM distributed cluster on Mesos"
 }
 
 function deploy_default() {
