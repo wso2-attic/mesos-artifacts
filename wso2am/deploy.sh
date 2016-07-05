@@ -37,13 +37,13 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-apim-db' $mysql_apim_db_service_port
   deploy_service 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
-  echoBold "wso2am-api-key-manager management console: https://${host_ip}:${wso2am_api_key_manager_service_port}/carbon"
+  echoBold "wso2am-api-key-manager management console: http://${host_ip}:${wso2am_api_key_manager_service_port}/carbon"
   deploy_service 'wso2am-api-store' $wso2am_api_store_service_port
-  echoBold "wso2am-api-store management console: https://${host_ip}:${wso2am_api_store_service_port}/store"
+  echoBold "wso2am-api-store management console: http://${host_ip}:${wso2am_api_store_service_port}/store"
   deploy_service 'wso2am-api-publisher' $wso2am_api_publisher_service_port
-  echoBold "wso2am-api-publisher management console: https://${host_ip}:${wso2am_api_publisher_service_port}/publisher"
+  echoBold "wso2am-api-publisher management console: http://${host_ip}:${wso2am_api_publisher_service_port}/publisher"
   deploy_service 'wso2am-gateway-manager' $wso2am_gateway_manager_service_port
-  echoBold "wso2am-gateway-manager management console: https://${host_ip}:${wso2am_gateway_manager_service_port}/carbon"
+  echoBold "wso2am-gateway-manager management console: http://${host_ip}:${wso2am_gateway_manager_service_port}/carbon"
   deploy_service 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
   echoSuccess "Successfully deployed WSO2 APIM distributed cluster on Mesos"
 }
