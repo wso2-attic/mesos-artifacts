@@ -1,9 +1,9 @@
 {
     "id": "wso2das-default",
     "cpus": 0.5,
-    "mem": 800.0,
+    "mem": 2048,
+    "sticky": true,
     "instances": 1,
-    "executor": "",
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -30,15 +30,105 @@
                 },
                 {
                     "containerPort": 7611,
-                    "servicePort": 10064,
+                    "hostPort": 0,
                     "protocol": "tcp",
                     "name": "thrift"
                 },
                 {
                     "containerPort": 7711,
-                    "servicePort": 10065,
+                    "hostPort": 0,
                     "protocol": "tcp",
                     "name": "thrift-ssl"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-ui"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-history-ui"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-block-manager"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-broadcast"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-driver"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-executor"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-fileserver"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-repl-class-server"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-master"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-master-rest"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-master-webui"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-worker"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "spark-worker-webui"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "event-sync"
+                },
+                {
+                    "containerPort": 0,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "name": "management"
                 }
             ]
         }
