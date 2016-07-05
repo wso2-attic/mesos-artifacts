@@ -18,12 +18,38 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-undeploy ${marathon_endpoint} wso2greg-pubstore-default
-undeploy ${marathon_endpoint} mysql-greg-apim-db
-undeploy ${marathon_endpoint} mysql-greg-db
-bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
-bash ${self_path}/../common/marathon-lb/undeploy.sh
+function undeploy_product() {
+undeploy wso2greg-pubstore-default
+undeploy mysql-greg-apim-db
+undeploy mysql-greg-db
+}
+
+function full_purge() {
+  undeploy_product
+  bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
+  bash ${self_path}/../common/marathon-lb/undeploy.sh
+}
+
+function main() {
+  full_purge=false
+  while getopts :f FLAG; do
+      case $FLAG in
+          f)
+              full_purge=true
+              ;;
+      esac
+  done
+
+  if [[ $full_purge == true ]]; then
+    echo "Purging WSO2 GREG PUBSTORE deployment..."
+    full_purge
+  else
+    echo "Undeploying WSO2 GREG PUBSTORE product..."
+    undeploy_product
+  fi
+}
+main "$@"

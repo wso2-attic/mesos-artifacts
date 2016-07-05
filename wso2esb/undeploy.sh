@@ -16,6 +16,7 @@
 # limitations under the License
 
 # ------------------------------------------------------------------------
+
 set -e
 self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."

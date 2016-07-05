@@ -22,59 +22,27 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
+mysql_esb_db_service_port=10091
 wso2esb_manager_service_port=10093
 wso2esb_worker_service_port=10095
 wso2esb_default_service_port=10095
-mysql_gov_db_service_port=10000
-mysql_user_db_service_port=10001
-mysql_esb_db_service_port=10091
-
-function deploy_base_services() {
-  if ! bash ${mesos_artifacts_home}/common/marathon-lb/deploy.sh; then
-    echoError "Non-zero exit code returned when deploying marathon-lb"
-    exit 1
-  fi
-  if ! bash ${mesos_artifacts_home}/common/wso2-shared-dbs/deploy.sh; then
-    echoError "Non-zero exit code returned when deploying WSO2 shared databases"
-    exit 1
-  fi
-  if ! deploy 'mysql-esb-db' ${self_path}/mysql-esb-db.json; then
-    echoError "Non-zero exit code returned when deploying mysql-esb-db"
-    exit 1
-  fi
-
-  waitUntilServiceIsActive 'mysql-gov-db' $mysql_gov_db_service_port
-  waitUntilServiceIsActive 'mysql-user-db' $mysql_user_db_service_port
-  waitUntilServiceIsActive 'mysql-esb-db' $mysql_esb_db_service_port
-}
 
 function deploy_distributed() {
   echoBold "Deploying WSO2 ESB distributed cluster on Mesos..."
-  deploy_base_services
-  if ! deploy 'wso2esb-manager' $self_path/wso2esb-manager.json; then
-    echoError "Non-zero exit code returned when deploying wso2esb-manager"
-    exit 1
-  fi
-  waitUntilServiceIsActive 'wso2esb-manager' $wso2esb_manager_service_port
-  echoBold "wso2esb-manager management console: https://${marathon_lb_host_ip}:${wso2esb_manager_service_port}/carbon"
-
-  if ! deploy 'wso2esb-worker' $self_path/wso2esb-worker.json; then
-      echoError "Non-zero exit code returned when deploying wso2esb-worker"
-      exit 1
-  fi
-  waitUntilServiceIsActive 'wso2esb-worker' $wso2esb_worker_service_port
+  deploy_common_services
+  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
+  deploy_service 'wso2esb-manager' $wso2esb_manager_service_port
+  echoBold "wso2esb-manager management console: https://${host_ip}:${wso2esb_manager_service_port}/carbon"
+  deploy_service 'wso2esb-worker' $wso2esb_worker_service_port
   echoSuccess "Successfully deployed WSO2 ESB distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 ESB default setup on Mesos..."
-  deploy_base_services
-  if ! deploy 'wso2esb-default' $self_path/wso2esb-default.json; then
-    echoError "Non-zero exit code returned when deploying wso2esb-default"
-    exit 1
-  fi
-  echoBold "wso2esb-default management console: https://${marathon_lb_host_ip}:${wso2esb_default_service_port}/carbon"
-  waitUntilServiceIsActive 'wso2esb-default' $wso2esb_default_service_port
+  deploy_common_services
+  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
+  deploy_service 'wso2esb-default' $wso2esb_default_service_port
+  echoBold "wso2esb-default management console: https://${host_ip}:${wso2esb_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 ESB default setup on Mesos"
 }
 

@@ -18,49 +18,53 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+mesos_artifacts_home="${self_path}/.."
+source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-marathon_endpoint="http://m1.dcos:8080/v2"
-source "${self_path}/../common/scripts/base.sh"
+mysql_brs_db_service_port=10041
+wso2brs_manager_service_port=10043
+wso2brs_worker_service_port=10045
+wso2brs_default_service_port=10043
 
-bash ${self_path}/../common/marathon-lb/deploy.sh
-echo "Waiting for marathon-lb to launch on a1.dcos:9090..."
-while ! nc -z a1.dcos 9090; do
-  sleep 0.1
-done
-echo "marathon-lb started successfully"
+function deploy_distributed() {
+  echoBold "Deploying WSO2 BRS distributed cluster on Mesos..."
+  deploy_common_services
+  deploy_service 'mysql-brs-db' $mysql_brs_db_service_port
+  deploy_service 'wso2brs-manager' $wso2brs_manager_service_port
+  echoBold "wso2brs-manager management console: https://${host_ip}:${wso2brs_manager_service_port}/carbon"
+  deploy_service 'wso2brs-worker' $wso2brs_worker_service_port
+  echoSuccess "Successfully deployed WSO2 BRS distributed cluster on Mesos"
+}
 
-bash ${self_path}/../common/wso2-shared-dbs/deploy.sh
-deploy ${marathon_endpoint} ${self_path}/mysql-brs-db.json
+function deploy_default() {
+  echoBold "Deploying WSO2 BRS default setup on Mesos..."
+  deploy_common_services
+  deploy_service 'mysql-brs-db' $mysql_brs_db_service_port
+  deploy_service 'wso2brs-default' $wso2brs_default_service_port
+  echoBold "wso2brs-default management console: https://${host_ip}:${wso2brs_default_service_port}/carbon"
+  echoSuccess "Successfully deployed WSO2 BRS default setup on Mesos"
+}
 
-echo "Waiting for mysql-gov-db to launch on a1.dcos:10000..."
-while ! nc -z a1.dcos 10000; do
-  sleep 0.1
-done
-echo "mysql-gov-db started successfully"
+function main () {
+  while getopts :dh FLAG; do
+      case $FLAG in
+          d)
+              deployment_pattern="distributed"
+              ;;
+          h)
+              showUsageAndExitDistributed
+              ;;
+          \?)
+              showUsageAndExitDistributed
+              ;;
+      esac
+  done
 
-echo "Waiting for mysql-user-db to launch on a1.dcos:10001..."
-while ! nc -z a1.dcos 10001; do
-  sleep 0.1
-done
-echo "mysql-user-db started successfully"
-
-echo "Waiting for mysql-brs-db to launch on a1.dcos:10002..."
-while ! nc -z a1.dcos 10002; do
-  sleep 0.1
-done
-echo "mysql-brs-db started successfully"
-
-deploy ${marathon_endpoint} ${self_path}/wso2brs-manager.json
-echo "Waiting for wso2brs-manager to launch on a1.dcos:10042..."
-while ! nc -z a1.dcos 10042; do
- sleep 0.1
-done
-echo "wso2brs-manager started successfully: https://wso2brs-manager:10042/carbon"
-
-deploy ${marathon_endpoint} ${self_path}/wso2brs-worker.json
-echo "Waiting for wso2brs-worker to launch on a1.dcos:10044..."
-while ! nc -z a1.dcos 10044; do
- sleep 0.1
-done
-echo "wso2brs-worker started successfully: https://wso2brs-worker:10044/"
+  if [[ $deployment_pattern == "distributed" ]]; then
+      deploy_distributed
+  else
+      deploy_default
+  fi
+}
+main "$@"
