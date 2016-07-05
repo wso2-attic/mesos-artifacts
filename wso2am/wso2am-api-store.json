@@ -14,17 +14,18 @@
                     "name": "hazelcast",
                     "containerPort": 0,
                     "hostPort": 0,
+                    "servicePort": 10220,
                     "protocol": "tcp"
                 },
                 {
                     "containerPort": 9763,
-                    "servicePort": 10011,
+                    "servicePort": 10208,
                     "protocol": "tcp",
                     "name": "servlet-http"
                 },
                 {
                     "containerPort": 9443,
-                    "servicePort": 10012,
+                    "servicePort": 10209,
                     "protocol": "tcp",
                     "name": "servlet-https"
                 }

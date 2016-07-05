@@ -22,12 +22,12 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-wso2am_default_service_port=10010
-wso2am_api_key_manager_service_port=10007
-wso2am_api_publisher_service_port=10009
-wso2am_api_store_service_port=10011
-wso2am_gateway_manager_service_port=10015
-wso2am_gateway_worker_service_port=10019
+wso2am_default_service_port=10202
+wso2am_api_key_manager_service_port=10204
+wso2am_api_publisher_service_port=10206
+wso2am_api_store_service_port=10208
+wso2am_gateway_manager_service_port=10212
+wso2am_gateway_worker_service_port=10216
 mysql_gov_db_service_port=10000
 mysql_user_db_service_port=10001
 mysql_am_db_service_port=10006
@@ -94,12 +94,12 @@ function deploy_distributed() {
   waitUntilServiceIsActive 'wso2am-gateway-manager' $wso2am_gateway_manager_service_port
   echoBold "wso2am-gateway-manager successfully started"
 
-#  if ! deploy 'wso2am-gateway-worker' $self_path/wso2am-gateway-worker.json; then
-#    echoError "Non-zero exit code returned when deploying wso2am-gateway-worker"
-#    exit 1
-#  fi
-#  waitUntilServiceIsActive 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
-#  echoBold "wso2am-gateway-worker successfully started"
+ # if ! deploy 'wso2am-gateway-worker' $self_path/wso2am-gateway-worker.json; then
+ #   echoError "Non-zero exit code returned when deploying wso2am-gateway-worker"
+ #   exit 1
+ # fi
+ # waitUntilServiceIsActive 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
+ # echoBold "wso2am-gateway-worker successfully started"
 
   echoSuccess "Successfully deployed WSO2 AM distributed cluster on Mesos"
 }
