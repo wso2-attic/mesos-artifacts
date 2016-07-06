@@ -14,6 +14,7 @@
           "name": "hazelcast",
           "containerPort": 0,
           "hostPort": 0,
+          "servicePort": 10026,
           "protocol": "tcp"
         },
         {
@@ -40,6 +41,7 @@
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
-    "HAPROXY_GROUP": "marathon-lb"
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
   }
 }
