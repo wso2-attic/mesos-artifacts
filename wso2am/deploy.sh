@@ -53,7 +53,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-apim-db' $mysql_apim_db_service_port
   deploy_service 'wso2am-default' $wso2am_default_service_port
-  echoBold "wso2am-default management console: https://${host_ip}:${wso2am_default_service_port}/carbon"
+  echoBold "wso2am-default management console: http://${host_ip}:${wso2am_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 APIM default setup on Mesos"
 }
 
