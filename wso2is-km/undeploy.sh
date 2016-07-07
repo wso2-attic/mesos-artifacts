@@ -22,30 +22,33 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_is_km_db_host_port=10141
-wso2is_km_default_service_port=10143
-
-function deploy_default() {
-  echoBold "Deploying WSO2 IS KM default setup on Mesos..."
-  deploy_common_services
-  deploy_service 'mysql-is_km-db' $mysql_is_km_db_host_port 'mysql-is_km-db'
-  deploy_service 'wso2is_km-default' $wso2is_km_default_service_port 'marathon-lb'
-  echoBold "wso2is_km-default management console: https://${host_ip}:${wso2is_km_default_service_port}/carbon"
-  echoSuccess "Successfully deployed WSO2 IS KM default setup on Mesos"
+function undeploy_product() {
+  undeploy wso2is-km-default
+  undeploy mysql-is-db
 }
 
-function main () {
-  while getopts :dh FLAG; do
+function full_purge() {
+  undeploy_product
+  bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
+  bash ${self_path}/../common/marathon-lb/undeploy.sh
+}
+
+function main() {
+  full_purge=false
+  while getopts :f FLAG; do
       case $FLAG in
-          h)
-              showUsageAndExitDistributed
-              ;;
-          \?)
-              showUsageAndExitDistributed
+          f)
+              full_purge=true
               ;;
       esac
   done
-  deploy_default
+
+  if [[ $full_purge == true ]]; then
+    echo "Purging WSO2 IS KM deployment..."
+    full_purge
+  else
+    echo "Undeploying WSO2 IS KM product..."
+    undeploy_product
+  fi
 }
 main "$@"
-
