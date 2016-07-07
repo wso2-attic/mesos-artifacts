@@ -22,7 +22,7 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_dss_db_service_port=10071
+mysql_dss_db_host_port=10071
 wso2dss_manager_service_port=10073
 wso2dss_worker_service_port=10075
 wso2dss_default_service_port=10073
@@ -30,18 +30,18 @@ wso2dss_default_service_port=10073
 function deploy_distributed() {
   echoBold "Deploying WSO2 DSS distributed cluster on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-dss-db' $mysql_dss_db_service_port
-  deploy_service 'wso2dss-manager' $wso2dss_manager_service_port
+  deploy_service 'mysql-dss-db' $mysql_dss_db_host_port 'mysql-dss-db'
+  deploy_service 'wso2dss-manager' $wso2dss_manager_service_port 'marathon-lb'
   echoBold "wso2dss-manager management console: https://${host_ip}:${wso2dss_manager_service_port}/carbon"
-  deploy_service 'wso2dss-worker' $wso2dss_worker_service_port
+  deploy_service 'wso2dss-worker' $wso2dss_worker_service_port 'marathon-lb'
   echoSuccess "Successfully deployed WSO2 DSS distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 DSS default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-dss-db' $mysql_dss_db_service_port
-  deploy_service 'wso2dss-default' $wso2dss_default_service_port
+  deploy_service 'mysql-dss-db' $mysql_dss_db_host_port 'mysql-dss-db'
+  deploy_service 'wso2dss-default' $wso2dss_default_service_port 'marathon-lb'
   echoBold "wso2dss-default management console: https://${host_ip}:${wso2dss_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 DSS default setup on Mesos"
 }

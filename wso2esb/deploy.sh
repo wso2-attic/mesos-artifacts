@@ -22,7 +22,7 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_esb_db_service_port=10091
+mysql_esb_db_host_port=10091
 wso2esb_manager_service_port=10093
 wso2esb_worker_service_port=10095
 wso2esb_default_service_port=10095
@@ -30,18 +30,18 @@ wso2esb_default_service_port=10095
 function deploy_distributed() {
   echoBold "Deploying WSO2 ESB distributed cluster on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
-  deploy_service 'wso2esb-manager' $wso2esb_manager_service_port
+  deploy_service 'mysql-esb-db' $mysql_esb_db_host_port 'mysql-esb-db'
+  deploy_service 'wso2esb-manager' $wso2esb_manager_service_port 'marathon-lb'
   echoBold "wso2esb-manager management console: https://${host_ip}:${wso2esb_manager_service_port}/carbon"
-  deploy_service 'wso2esb-worker' $wso2esb_worker_service_port
+  deploy_service 'wso2esb-worker' $wso2esb_worker_service_port 'marathon-lb'
   echoSuccess "Successfully deployed WSO2 ESB distributed cluster on Mesos"
 }
 
 function deploy_default() {
   echoBold "Deploying WSO2 ESB default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-esb-db' $mysql_esb_db_service_port
-  deploy_service 'wso2esb-default' $wso2esb_default_service_port
+  deploy_service 'mysql-esb-db' $mysql_esb_db_host_port 'mysql-esb-db'
+  deploy_service 'wso2esb-default' $wso2esb_default_service_port 'marathon-lb'
   echoBold "wso2esb-default management console: https://${host_ip}:${wso2esb_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 ESB default setup on Mesos"
 }

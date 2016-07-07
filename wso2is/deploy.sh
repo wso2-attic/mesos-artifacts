@@ -22,14 +22,14 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_is_db_service_port=10111
+mysql_is_db_host_port=10111
 wso2is_default_service_port=10113
 
 function deploy_default() {
   echoBold "Deploying WSO2 IS default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-is-db' $mysql_is_db_service_port
-  deploy_service 'wso2is-default' $wso2is_default_service_port
+  deploy_service 'mysql-is-db' $mysql_is_db_host_port 'mysql-is-db'
+  deploy_service 'wso2is-default' $wso2is_default_service_port 'marathon-lb'
   echoBold "wso2is-default management console: https://${host_ip}:${wso2is_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 IS default setup on Mesos"
 }

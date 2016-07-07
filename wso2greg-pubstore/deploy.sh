@@ -22,16 +22,16 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-mysql_greg_db_service_port=10131
+mysql_greg_db_host_port=10131
 mysql_greg_apim_db_service_port=10132
 wso2greg_pubstore_default_service_port=10134
 
 function deploy_default() {
   echoBold "Deploying WSO2 GREG-PUBSTORE default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-greg-db' $mysql_greg_db_service_port
-  deploy_service 'mysql-greg-apim-db' $mysql_greg_apim_db_service_port
-  deploy_service 'wso2greg-pubstore-default' $wso2greg_pubstore_default_service_port
+  deploy_service 'mysql-greg-db' $mysql_greg_db_host_port 'mysql-greg-db'
+  deploy_service 'mysql-greg-apim-db' $mysql_greg_apim_db_service_port 'mysql-greg-apim-db'
+  deploy_service 'wso2greg-pubstore-default' $wso2greg_pubstore_default_service_port 'marathon-lb'
   echoBold "wso2greg-pubstore-default management console: https://${host_ip}:${wso2greg_pubstore_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 GREG-PUBSTORE default setup on Mesos"
 }
