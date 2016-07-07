@@ -23,9 +23,9 @@ mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 mysql_bps_db_service_port=10031
-wso2bps_manager_service_port=10033
-wso2bps_worker_service_port=10035
-wso2bps_default_service_port=10033
+wso2bps_manager_service_port=10032
+wso2bps_worker_service_port=10034
+wso2bps_default_service_port=10032
 
 function deploy_distributed() {
   echoBold "Deploying WSO2 BPS distributed cluster on Mesos..."
