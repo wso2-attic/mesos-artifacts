@@ -13,6 +13,7 @@
                     "name": "hazelcast",
                     "containerPort": 0,
                     "hostPort": 0,
+                    "servicePort": 10047,
                     "protocol": "tcp"
                 },
                 {
@@ -40,6 +41,7 @@
         }
     ],
     "labels": {
-        "HAPROXY_GROUP": "marathon-lb"
+        "HAPROXY_1_GROUP": "marathon-lb",
+        "HAPROXY_2_GROUP": "marathon-lb"
     }
 }

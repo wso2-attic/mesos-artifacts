@@ -21,10 +21,7 @@
                     "containerPort": 8280,
                     "servicePort": 10200,
                     "protocol": "tcp",
-                    "name": "pass-through-http",
-                    "labels": {
-                        "VIP_0": "8280"
-                    }
+                    "name": "pass-through-http"
                 },
                 {
                     "containerPort": 8243,
