@@ -24,8 +24,8 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 function undeploy_product() {
   undeploy wso2cep-default
-  undeploy wso2cep-worker
-  undeploy wso2cep-presenter
+  # undeploy wso2cep-worker
+  # undeploy wso2cep-presenter
   undeploy mysql-cep-db
 }
 

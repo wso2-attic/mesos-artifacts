@@ -23,18 +23,19 @@ mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 mysql_cep_db_host_port=10091
-wso2cep_presenter_service_port=10093
-wso2cep_worker_service_port=10095
+# wso2cep_presenter_service_port=10093
+# wso2cep_worker_service_port=10095
 wso2cep_default_service_port=10095
 
 function deploy_distributed() {
-  echoBold "Deploying WSO2 CEP distributed cluster on Mesos..."
-  deploy_common_services
-  deploy_service 'mysql-cep-db' $mysql_cep_db_host_port 'mysql-cep-db'
-  deploy_service 'wso2cep-presenter' $wso2cep_presenter_service_port 'marathon-lb'
-  echoBold "wso2cep-presenter management console: https://${host_ip}:${wso2cep_presenter_service_port}/carbon"
-  deploy_service 'wso2cep-worker' $wso2cep_worker_service_port 'marathon-lb'
-  echoSuccess "Successfully deployed WSO2 CEP distributed cluster on Mesos"
+  echoError "CEP ha/distributed deployment not supported!"
+  # echoBold "Deploying WSO2 CEP distributed cluster on Mesos..."
+  # deploy_common_services
+  # deploy_service 'mysql-cep-db' $mysql_cep_db_host_port 'mysql-cep-db'
+  # deploy_service 'wso2cep-presenter' $wso2cep_presenter_service_port 'marathon-lb'
+  # echoBold "wso2cep-presenter management console: https://${host_ip}:${wso2cep_presenter_service_port}/carbon"
+  # deploy_service 'wso2cep-worker' $wso2cep_worker_service_port 'marathon-lb'
+  # echoSuccess "Successfully deployed WSO2 CEP distributed cluster on Mesos"
 }
 
 function deploy_default() {
