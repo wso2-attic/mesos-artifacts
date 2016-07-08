@@ -1,7 +1,7 @@
 {
   "id": "wso2esb-worker",
-  "cpus": 0.2,
-  "mem": 700,
+  "cpus": 0.5,
+  "mem": 1024,
   "disk": 0,
   "instances": 1,
   "container": {
@@ -13,19 +13,32 @@
           "name": "hazelcast",
           "containerPort": 0,
           "hostPort": 0,
+          "servicePort": 10096,
           "protocol": "tcp"
         },
         {
           "containerPort": 8280,
-          "servicePort": 10094,
+          "servicePort": 10092,
           "protocol": "tcp",
           "name": "pass-through-http"
         },
         {
           "containerPort": 8243,
-          "servicePort": 10095,
+          "servicePort": 10093,
           "protocol": "tcp",
           "name": "pass-through-https"
+        },
+        {
+          "containerPort": 9763,
+          "servicePort": 10094,
+          "protocol": "tcp",
+          "name": "servlet-http"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10095,
+          "protocol": "tcp",
+          "name": "servlet-https"
         }
       ]
     },
@@ -40,6 +53,7 @@
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
-    "HAPROXY_GROUP": "marathon-lb"
+    "HAPROXY_3_GROUP": "marathon-lb",
+    "HAPROXY_4_GROUP": "marathon-lb"
   }
 }

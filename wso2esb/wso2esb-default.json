@@ -1,7 +1,7 @@
 {
   "id": "wso2esb-default",
-  "cpus": 0.2,
-  "mem": 700,
+  "cpus": 0.5,
+  "mem": 800,
   "instances": 1,
   "executor": "",
   "container": {
@@ -14,6 +14,7 @@
           "name": "hazelcast",
           "containerPort": 0,
           "hostPort": 0,
+          "servicePort": 10096,
           "protocol": "tcp"
         },
         {
@@ -52,6 +53,7 @@
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
-    "HAPROXY_GROUP": "marathon-lb"
+    "HAPROXY_3_GROUP": "marathon-lb",
+    "HAPROXY_4_GROUP": "marathon-lb"
   }
 }

@@ -1,46 +1,47 @@
 {
-    "id": "wso2es-default",
-    "cpus": 0.5,
-    "mem": 800.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2es-mesos:2.0.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10082,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10083,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
-                }
-            ]
-        }
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "environment": "dev",
-        "HAPROXY_GROUP": "marathon-lb"
-    },
-    "healthChecks": [
+  "id": "wso2es-default",
+  "cpus": 0.5,
+  "mem": 800.0,
+  "instances": 1,
+  "executor": "",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2es-mesos:2.0.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 1
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10084,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9763,
+          "servicePort": 10082,
+          "protocol": "tcp",
+          "name": "servlet-http"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10083,
+          "protocol": "tcp",
+          "name": "servlet-https"
         }
-    ]
+      ]
+    }
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }

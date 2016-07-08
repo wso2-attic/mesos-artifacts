@@ -1,7 +1,7 @@
 {
   "id": "wso2esb-manager",
-  "cpus": 0.2,
-  "mem": 700,
+  "cpus": 0.5,
+  "mem": 1024,
   "disk": 0,
   "instances": 1,
   "container": {
@@ -13,17 +13,18 @@
           "name": "hazelcast",
           "containerPort": 0,
           "hostPort": 0,
+          "servicePort": 10099,
           "protocol": "tcp"
         },
         {
           "containerPort": 9763,
-          "servicePort": 10092,
+          "servicePort": 10097,
           "protocol": "tcp",
           "name": "servlet-http"
         },
         {
           "containerPort": 9443,
-          "servicePort": 10093,
+          "servicePort": 10098,
           "protocol": "tcp",
           "name": "servlet-https"
         }
@@ -40,6 +41,7 @@
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
-    "HAPROXY_GROUP": "marathon-lb"
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
   }
 }

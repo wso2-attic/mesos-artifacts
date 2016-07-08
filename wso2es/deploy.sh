@@ -25,7 +25,7 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 mysql_es_db_host_port=10081
 wso2es_store_service_port=10085
 wso2es_publisher_service_port=10083
-wso2es_default_service_port=10085
+wso2es_default_service_port=10083
 
 function deploy_distributed() {
   echoBold "Deploying WSO2 ES distributed cluster on Mesos..."
