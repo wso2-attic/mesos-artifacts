@@ -1,11 +1,11 @@
 {
   "id": "mysql-es-db",
-  "cmd": null,
-  "cpus": 0.25,
+  "cpus": 0.2,
   "mem": 128,
   "disk": 0,
   "instances": 1,
   "container": {
+    "type": "DOCKER",
     "docker": {
       "image": "mysql:5.5",
       "network": "BRIDGE",
@@ -14,11 +14,13 @@
           "containerPort": 3306,
           "hostPort": 10081,
           "protocol": "tcp",
-          "name": "mysql-server-port"
+          "name": "mysql",
+          "labels": {
+            "VIP_0": "3306"
+          }
         }
       ]
-    },
-    "type": "DOCKER"
+    }
   },
   "env": {
     "MYSQL_ROOT_PASSWORD": "root",
@@ -28,10 +30,10 @@
   },
   "healthChecks": [
     {
-      "protocol": "TCP",
-      "portIndex": 0,
+      "protocol": "COMMAND",
+      "command": { "value": "mysqladmin -u $MYSQL_USER -p$MYSQL_PASSWORD status" },
       "gracePeriodSeconds": 300,
-      "intervalSeconds": 60,
+      "intervalSeconds": 20,
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3
     }
