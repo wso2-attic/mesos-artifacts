@@ -1,47 +1,46 @@
 {
-    "id": "wso2am-api-key-manager",
-    "cpus": 1.0,
-    "mem": 1000.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2am-api-key-manager-mesos:1.10.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "servicePort": 10218,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10204,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10205,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
-                }
-            ]
-        }
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "HAPROXY_1_GROUP": "marathon-lb",
-        "HAPROXY_2_GROUP": "marathon-lb"
-     },
-    "healthChecks": [
+  "id": "wso2am-api-key-manager",
+  "cpus": 1.0,
+  "mem": 2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2am-api-key-manager-mesos:1.10.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 1
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10218,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-http",
+          "containerPort": 9763,
+          "servicePort": 10204,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10205,
+          "protocol": "tcp",
+          "name": "servlet-https"
         }
-    ]
+      ]
+    }
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }

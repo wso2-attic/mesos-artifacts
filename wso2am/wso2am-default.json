@@ -1,61 +1,60 @@
 {
-    "id": "wso2am-default",
-    "cpus": 1.0,
-    "mem": 1000.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2am-mesos:1.10.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "servicePort": 10221,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 8280,
-                    "servicePort": 10200,
-                    "protocol": "tcp",
-                    "name": "pass-through-http"
-                },
-                {
-                    "containerPort": 8243,
-                    "servicePort": 10201,
-                    "protocol": "tcp",
-                    "name": "pass-through-https"
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10202,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10203,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
-                }
-            ]
-        }
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "HAPROXY_1_GROUP": "marathon-lb",
-        "HAPROXY_2_GROUP": "marathon-lb",
-        "HAPROXY_3_GROUP": "marathon-lb",
-        "HAPROXY_4_GROUP": "marathon-lb"
-    },
-    "healthChecks": [
+  "id": "wso2am-default",
+  "cpus": 1.0,
+  "mem": 2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2am-mesos:1.10.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 3
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10221,
+          "protocol": "tcp"
+        },
+        {
+          "name": "pass-through-http",
+          "containerPort": 8280,
+          "servicePort": 10200,
+          "protocol": "tcp"
+        },
+        {
+          "name": "pass-through-https",
+          "containerPort": 8243,
+          "servicePort": 10201,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-http",
+          "containerPort": 9763,
+          "servicePort": 10202,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-https",
+          "containerPort": 9443,
+          "servicePort": 10203,
+          "protocol": "tcp"
         }
-    ]
+      ]
+    }
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb",
+    "HAPROXY_3_GROUP": "marathon-lb",
+    "HAPROXY_4_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 3
+    }
+  ]
 }
