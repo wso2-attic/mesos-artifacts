@@ -1,76 +1,76 @@
 {
-    "id": "wso2mb-default",
-    "cpus": 0.5,
-    "mem": 800.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2mb-mesos:3.1.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10122,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10123,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
-                },
-                {
-                    "containerPort": 5672,
-                    "servicePort": 10124,
-                    "protocol": "tcp",
-                    "name": "amqp"
-                },
-                {
-                    "containerPort": 8672,
-                    "servicePort": 10125,
-                    "protocol": "tcp",
-                    "name": "amqp-ssl"
-                },
-                {
-                    "containerPort": 1883,
-                    "servicePort": 10126,
-                    "protocol": "tcp",
-                    "name": "mqtt"
-                },
-                {
-                    "containerPort": 8833,
-                    "servicePort": 10127,
-                    "protocol": "tcp",
-                    "name": "mqtt-ssl"
-                },
-                {
-                    "containerPort": 7611,
-                    "servicePort": 10128,
-                    "protocol": "tcp",
-                    "name": "thrift"
-                }
-            ]
-        }
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-        "environment": "dev",
-        "HAPROXY_GROUP": "marathon-lb"
-    },
-    "healthChecks": [
+  "id": "wso2mb-default",
+  "cpus": 0.5,
+  "mem": 2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2mb-mesos:3.1.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 1
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10129,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-http",
+          "containerPort": 9763,
+          "servicePort": 10122,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-https",
+          "containerPort": 9443,
+          "servicePort": 10123,
+          "protocol": "tcp"
+        },
+        {
+          "name": "amqp",
+          "containerPort": 5672,
+          "servicePort": 10124,
+          "protocol": "tcp"
+        },
+        {
+          "name": "amqp-ssl",
+          "containerPort": 8672,
+          "servicePort": 10125,
+          "protocol": "tcp"
+        },
+        {
+          "name": "mqtt",
+          "containerPort": 1883,
+          "servicePort": 10126,
+          "protocol": "tcp"
+        },
+        {
+          "name": "mqtt-ssl",
+          "containerPort": 8833,
+          "servicePort": 10127,
+          "protocol": "tcp"
+        },
+        {
+          "name": "thrift",
+          "containerPort": 7611,
+          "servicePort": 10128,
+          "protocol": "tcp"
         }
-    ]
+      ]
+    }
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }

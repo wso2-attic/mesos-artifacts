@@ -1,62 +1,60 @@
 {
-    "id": "wso2cep-default",
-    "cpus": 0.5,
-    "mem": 800.0,
-    "instances": 1,
-    "executor": "",
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "wso2cep-mesos:4.0.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "servicePort": 10056,
-                    "hostPort": 0,
-                    "protocol": "tcp"
-                },
-                {
-                    "name": "servlet-http",
-                    "containerPort": 9763,
-                    "servicePort": 10052,
-                    "protocol": "tcp"
-                },
-                {
-                    "name": "servlet-https",
-                    "containerPort": 9443,
-                    "servicePort": 10053,
-                    "protocol": "tcp"
-                },
-                {
-                    "name": "thrift",
-                    "containerPort": 7611,
-                    "servicePort": 10054,
-                    "protocol": "tcp"
-                },
-                {
-                    "name": "thrift-ssl",
-                    "containerPort": 7711,
-                    "servicePort": 10055,
-                    "protocol": "tcp"
-                }
-
-            ]
-        }
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "labels": {
-      "HAPROXY_1_GROUP": "marathon-lb",
-      "HAPROXY_2_GROUP": "marathon-lb",
-      "HAPROXY_3_GROUP": "marathon-lb",
-      "HAPROXY_4_GROUP": "marathon-lb"
-    },
-    "healthChecks": [
+  "id": "wso2cep-default",
+  "cpus": 0.5,
+  "mem":2048,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "wso2cep-mesos:4.0.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 1
+          "name": "hazelcast",
+          "containerPort": 0,
+          "servicePort": 10056,
+          "hostPort": 0,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-http",
+          "containerPort": 9763,
+          "servicePort": 10052,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-https",
+          "containerPort": 9443,
+          "servicePort": 10053,
+          "protocol": "tcp"
+        },
+        {
+          "name": "thrift",
+          "containerPort": 7611,
+          "servicePort": 10054,
+          "protocol": "tcp"
+        },
+        {
+          "name": "thrift-ssl",
+          "containerPort": 7711,
+          "servicePort": 10055,
+          "protocol": "tcp"
         }
-    ]
+      ]
+    }
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb",
+    "HAPROXY_3_GROUP": "marathon-lb",
+    "HAPROXY_4_GROUP": "marathon-lb"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }

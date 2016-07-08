@@ -1,10 +1,10 @@
 {
   "id": "wso2es-store",
   "cpus": 0.5,
-  "mem": 1024,
-  "disk": 0,
+  "mem": 2048,
   "instances": 1,
   "container": {
+    "type": "DOCKER",
     "docker": {
       "image": "wso2es-store-mesos:2.0.0",
       "network": "BRIDGE",
@@ -17,31 +17,30 @@
           "protocol": "tcp"
         },
         {
+          "name": "servlet-http",
           "containerPort": 9763,
           "servicePort": 10084,
-          "protocol": "tcp",
-          "name": "servlet-http"
+          "protocol": "tcp"
         },
         {
+          "name": "servlet-https",
           "containerPort": 9443,
           "servicePort": 10085,
-          "protocol": "tcp",
-          "name": "servlet-https"
+          "protocol": "tcp"
         }
       ]
-    },
-    "type": "DOCKER"
+    }
   },
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
   },
   "healthChecks": [
     {
       "portIndex": 1
     }
-  ],
-  "labels": {
-    "HAPROXY_1_GROUP": "marathon-lb",
-    "HAPROXY_2_GROUP": "marathon-lb"
-  }
+  ]
 }

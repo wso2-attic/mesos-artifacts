@@ -1,9 +1,8 @@
 {
   "id": "wso2is-km-default",
   "cpus": 0.5,
-  "mem": 800.0,
+  "mem": 2048,
   "instances": 1,
-  "executor": "",
   "container": {
     "type": "DOCKER",
     "docker": {
@@ -18,28 +17,28 @@
           "protocol": "tcp"
         },
         {
+          "name": "servlet-http",
           "containerPort": 9763,
           "servicePort": 10142,
-          "protocol": "tcp",
-          "name": "servlet-http"
+          "protocol": "tcp"
         },
         {
+          "name": "servlet-https",
           "containerPort": 9443,
           "servicePort": 10143,
-          "protocol": "tcp",
-          "name": "servlet-https"
+          "protocol": "tcp"
         },
         {
+          "name": "kdc-server",
           "containerPort": 8000,
           "servicePort": 10144,
-          "protocol": "tcp",
-          "name": "kdc-server"
+          "protocol": "tcp"
         },
         {
+          "name": "thrift-entitlement",
           "containerPort": 10500,
           "servicePort": 10145,
-          "protocol": "tcp",
-          "name": "thrift-entitlement"
+          "protocol": "tcp"
         }
       ]
     }

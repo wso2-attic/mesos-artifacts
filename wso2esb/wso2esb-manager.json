@@ -1,10 +1,10 @@
 {
   "id": "wso2esb-manager",
   "cpus": 0.5,
-  "mem": 1024,
-  "disk": 0,
+  "mem": 2048,
   "instances": 1,
   "container": {
+    "type": "DOCKER",
     "docker": {
       "image": "wso2esb-manager-mesos:4.9.0",
       "network": "BRIDGE",
@@ -17,20 +17,19 @@
           "protocol": "tcp"
         },
         {
+          "name": "servlet-http",
           "containerPort": 9763,
           "servicePort": 10097,
-          "protocol": "tcp",
-          "name": "servlet-http"
+          "protocol": "tcp"
         },
         {
+          "name": "servlet-https",
           "containerPort": 9443,
           "servicePort": 10098,
-          "protocol": "tcp",
-          "name": "servlet-https"
+          "protocol": "tcp"
         }
       ]
-    },
-    "type": "DOCKER"
+    }
   },
   "healthChecks": [
     {

@@ -1,8 +1,7 @@
 {
   "id": "wso2as-manager",
-  "cpus": 0.2,
-  "mem": 700,
-  "disk": 0,
+  "cpus": 0.5,
+  "mem": 2048,
   "instances": 1,
   "container": {
     "type": "DOCKER",
@@ -18,30 +17,30 @@
           "protocol": "tcp"
         },
         {
+          "name": "servlet-http",
           "containerPort": 9763,
           "servicePort": 10022,
-          "protocol": "tcp",
-          "name": "servlet-http"
+          "protocol": "tcp"
         },
         {
+          "name": "servlet-https",
           "containerPort": 9443,
           "servicePort": 10023,
-          "protocol": "tcp",
-          "name": "servlet-https"
+          "protocol": "tcp"
         }
       ]
     }
   },
-  "healthChecks": [
-    {
-      "portIndex": 1
-    }
-  ],
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
     "HAPROXY_1_GROUP": "marathon-lb",
     "HAPROXY_2_GROUP": "marathon-lb"
-  }
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }

@@ -1,10 +1,10 @@
 {
   "id": "wso2esb-worker",
   "cpus": 0.5,
-  "mem": 1024,
-  "disk": 0,
+  "mem": 2048,
   "instances": 1,
   "container": {
+    "type": "DOCKER",
     "docker": {
       "image": "wso2esb-worker-mesos:4.9.0",
       "network": "BRIDGE",
@@ -17,32 +17,19 @@
           "protocol": "tcp"
         },
         {
+          "name": "pass-through-http",
           "containerPort": 8280,
           "servicePort": 10092,
-          "protocol": "tcp",
-          "name": "pass-through-http"
+          "protocol": "tcp"
         },
         {
+          "name": "pass-through-https",
           "containerPort": 8243,
           "servicePort": 10093,
-          "protocol": "tcp",
-          "name": "pass-through-https"
-        },
-        {
-          "containerPort": 9763,
-          "servicePort": 10094,
-          "protocol": "tcp",
-          "name": "servlet-http"
-        },
-        {
-          "containerPort": 9443,
-          "servicePort": 10095,
-          "protocol": "tcp",
-          "name": "servlet-https"
+          "protocol": "tcp"
         }
       ]
-    },
-    "type": "DOCKER"
+    }
   },
   "healthChecks": [
     {
@@ -53,7 +40,7 @@
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
   "labels": {
-    "HAPROXY_3_GROUP": "marathon-lb",
-    "HAPROXY_4_GROUP": "marathon-lb"
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
   }
 }
