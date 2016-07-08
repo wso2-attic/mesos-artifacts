@@ -71,16 +71,18 @@ fi
 
 IFS=$'\n'
 
+# Get Mesos nodes from CLI
 mesos_nodes=($(getMesosNodes))
 if [ "${#mesos_nodes[@]}" -lt 1 ]; then
     echoError "No Mesos Nodes found."
     exit 1
 fi
 
+# Check conectivity with provided credentials
 if [[ -z "$key_file_path" ]]; then
-    (ssh $mesos_username@${mesos_nodes[0]} -t "exit 0")
+    (ssh $mesos_username@${mesos_nodes[0]} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "exit 0")
 else
-    (ssh -i ${key_file_path} $mesos_username@${mesos_nodes[0]} -t "exit 0") >> /dev/null
+    (ssh -i ${key_file_path} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $mesos_username@${mesos_nodes[0]} -t "exit 0") >> /dev/null
 fi
 
 if [ $? -ne 0 ]; then
@@ -113,9 +115,9 @@ do
                 echoDim "Copying saved image to ${mesos_node}..."
                 echoDim "Copying Docker Image to Node ${mesos_node}..."
                 if [[ -z "$key_file_path" ]]; then
-                    scp /tmp/$image_id.tar $mesos_username@$mesos_node:. &
+                    scp /tmp/$image_id.tar -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $mesos_username@$mesos_node:. &
                 else
-                    scp -i ${key_file_path} /tmp/$image_id.tar  $mesos_username@$mesos_node:. &
+                    scp -i ${key_file_path} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/$image_id.tar  $mesos_username@$mesos_node:. &
                 fi
             done
             wait
@@ -126,9 +128,9 @@ do
             do
                 echoDim "Loading saved image in ${mesos_node}"
                 if [[ -z "$key_file_path" ]]; then
-                    ssh $mesos_username@$mesos_node -t -t "sudo docker load < ${image_id}.tar && rm -rf ${image_id}.tar" &
+                    ssh $mesos_username@$mesos_node -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t -t "sudo docker load < ${image_id}.tar && rm -rf ${image_id}.tar" &
                 else
-                    ssh -i ${key_file_path} $mesos_username@$mesos_node -t -t "sudo docker load < ${image_id}.tar && rm -rf ${image_id}.tar" &
+                    ssh -i ${key_file_path} $mesos_username@$mesos_node -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t -t "sudo docker load < ${image_id}.tar && rm -rf ${image_id}.tar" &
                 fi
             done
             wait
