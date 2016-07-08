@@ -1,7 +1,7 @@
 {
     "id": "wso2das-default",
     "cpus": 0.5,
-    "mem": 2048,
+    "mem": 1024,
     "sticky": true,
     "instances": 1,
     "container": {
@@ -42,12 +42,14 @@
                 },
                 {
                     "containerPort": 0,
+                    "servicePort": 10064,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "name": "spark-ui"
                 },
                 {
                     "containerPort": 0,
+                    "servicePort": 10065,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "name": "spark-history-ui"
@@ -102,6 +104,7 @@
                 },
                 {
                     "containerPort": 0,
+                    "servicePort": 10066,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "name": "spark-master-webui"
@@ -114,6 +117,7 @@
                 },
                 {
                     "containerPort": 0,
+                    "servicePort": 10067,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "name": "spark-worker-webui"

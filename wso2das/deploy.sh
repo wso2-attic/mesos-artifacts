@@ -35,7 +35,7 @@ function deploy_default() {
 }
 
 function main () {
-  while getopts :dh FLAG; do
+  while getopts :sh FLAG; do
       case $FLAG in
           h)
               showUsageAndExitDistributed
