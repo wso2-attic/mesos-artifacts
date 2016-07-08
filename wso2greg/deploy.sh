@@ -24,20 +24,7 @@ mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 mysql_greg_db_host_port=10101
-wso2greg_store_service_port=10105
-wso2greg_publisher_service_port=10103
 wso2greg_default_service_port=10103
-
-function deploy_distributed() {
-  echoBold "Deploying WSO2 GREG distributed cluster on Mesos..."
-  deploy_common_services
-  deploy_service 'mysql-greg-db' $mysql_greg_db_host_port 'mysql-greg-db'
-  deploy_service 'wso2greg-store' $wso2greg_store_service_port 'marathon-lb'
-  echoBold "wso2greg-store management console: https://${host_ip}:${wso2greg_store_service_port}/store"
-  deploy_service 'wso2greg-publisher' $wso2greg_publisher_service_port 'marathon-lb'
-  echoBold "wso2greg-publisher management console: https://${host_ip}:${wso2greg_publisher_service_port}/publisher"
-  echoSuccess "Successfully deployed WSO2 GREG distributed cluster on Mesos"
-}
 
 function deploy_default() {
   echoBold "Deploying WSO2 GREG default setup on Mesos..."
@@ -51,9 +38,6 @@ function deploy_default() {
 function main () {
   while getopts :dh FLAG; do
       case $FLAG in
-          d)
-              deployment_pattern="distributed"
-              ;;
           h)
               showUsageAndExitDistributed
               ;;
@@ -63,10 +47,7 @@ function main () {
       esac
   done
 
-  if [[ $deployment_pattern == "distributed" ]]; then
-      deploy_distributed
-  else
-      deploy_default
-  fi
+  deploy_default
+
 }
 main "$@"

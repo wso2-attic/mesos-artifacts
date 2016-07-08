@@ -24,8 +24,6 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 function undeploy_product() {
   undeploy wso2greg-default
-  undeploy wso2greg-publisher
-  undeploy wso2greg-store
   undeploy mysql-greg-db
 }
 
