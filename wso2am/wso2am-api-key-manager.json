@@ -36,9 +36,9 @@
         "KEY_STORE_PASSWORD": "wso2carbon"
     },
     "labels": {
-        "environment": "dev",
-        "HAPROXY_GROUP": "marathon-lb"
-    },
+        "HAPROXY_1_GROUP": "marathon-lb",
+        "HAPROXY_2_GROUP": "marathon-lb"
+     },
     "healthChecks": [
         {
             "portIndex": 1
