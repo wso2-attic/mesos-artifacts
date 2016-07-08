@@ -13,32 +13,33 @@
                 {
                     "name": "hazelcast",
                     "containerPort": 0,
+                    "servicePort": 10056,
                     "hostPort": 0,
                     "protocol": "tcp"
                 },
                 {
+                    "name": "servlet-http",
                     "containerPort": 9763,
                     "servicePort": 10052,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
+                    "protocol": "tcp"
                 },
                 {
+                    "name": "servlet-https",
                     "containerPort": 9443,
                     "servicePort": 10053,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
+                    "protocol": "tcp"
                 },
                 {
+                    "name": "thrift",
                     "containerPort": 7611,
                     "servicePort": 10054,
-                    "protocol": "tcp",
-                    "name": "thrift"
+                    "protocol": "tcp"
                 },
                 {
+                    "name": "thrift-ssl",
                     "containerPort": 7711,
                     "servicePort": 10055,
-                    "protocol": "tcp",
-                    "name": "thrift-ssl"
+                    "protocol": "tcp"
                 }
 
             ]
