@@ -1,45 +1,47 @@
 {
-    "id": "wso2es-publisher",
-    "cpus": 0.5,
-    "mem": 1024,
-    "disk": 0,
-    "instances": 1,
-    "container": {
-        "docker": {
-            "image": "wso2es-publisher-mesos:2.0.0",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "name": "hazelcast",
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 9763,
-                    "servicePort": 10082,
-                    "protocol": "tcp",
-                    "name": "servlet-http"
-                },
-                {
-                    "containerPort": 9443,
-                    "servicePort": 10083,
-                    "protocol": "tcp",
-                    "name": "servlet-https"
-                }
-            ]
-        },
-        "type": "DOCKER"
-    },
-    "env": {
-        "KEY_STORE_PASSWORD": "wso2carbon"
-    },
-    "healthChecks": [
+  "id": "wso2es-publisher",
+  "cpus": 0.5,
+  "mem": 1024,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "wso2es-publisher-mesos:2.0.0",
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "portIndex": 1
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10086,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9763,
+          "servicePort": 10082,
+          "protocol": "tcp",
+          "name": "servlet-http"
+        },
+        {
+          "containerPort": 9443,
+          "servicePort": 10083,
+          "protocol": "tcp",
+          "name": "servlet-https"
         }
-    ],
-    "labels": {
-        "HAPROXY_GROUP": "marathon-lb"
+      ]
+    },
+    "type": "DOCKER"
+  },
+  "env": {
+    "KEY_STORE_PASSWORD": "wso2carbon"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
     }
+  ],
+  "labels": {
+    "HAPROXY_1_GROUP": "marathon-lb",
+    "HAPROXY_2_GROUP": "marathon-lb"
+  }
 }
