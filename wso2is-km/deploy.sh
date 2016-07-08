@@ -28,9 +28,9 @@ wso2is_km_default_service_port=10143
 function deploy_default() {
   echoBold "Deploying WSO2 IS KM default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-is-db' $mysql_is_km_db_host_port 'mysql-is-db'
-  deploy_service 'wso2is-km-default' $wso2is_km_default_service_port 'marathon-lb'
-  echoBold "wso2is-km-default management console: https://${host_ip}:${wso2is_km_default_service_port}/carbon"
+  deploy_service 'mysql-is-db' $mysql_is_km_db_host_port
+  deploy_service 'wso2is-km-default' $wso2is_km_default_service_port
+  echoBold "wso2is-km-default management console: https://${marathonlb_host_ip}:${wso2is_km_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 IS KM default setup on Mesos"
 }
 
@@ -48,4 +48,3 @@ function main () {
   deploy_default
 }
 main "$@"
-

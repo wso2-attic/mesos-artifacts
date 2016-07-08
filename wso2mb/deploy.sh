@@ -28,9 +28,9 @@ wso2mb_default_service_port=10123
 function deploy_default() {
   echoBold "Deploying WSO2 MB default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-mb-db' $mysql_mb_db_host_port 'mysql-mb-db'
-  deploy_service 'wso2mb-default' $wso2mb_default_service_port 'marathon-lb'
-  echoBold "wso2mb-default management console: https://${host_ip}:${wso2mb_default_service_port}/carbon"
+  deploy_service 'mysql-mb-db' $mysql_mb_db_host_port
+  deploy_service 'wso2mb-default' $wso2mb_default_service_port
+  echoBold "wso2mb-default management console: https://${marathonlb_host_ip}:${wso2mb_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 MB default setup on Mesos"
 }
 

@@ -29,9 +29,9 @@ wso2greg_default_service_port=10103
 function deploy_default() {
   echoBold "Deploying WSO2 GREG default setup on Mesos..."
   deploy_common_services
-  deploy_service 'mysql-greg-db' $mysql_greg_db_host_port 'mysql-greg-db'
-  deploy_service 'wso2greg-default' $wso2greg_default_service_port 'marathon-lb'
-  echoBold "wso2greg-default management console: https://${host_ip}:${wso2greg_default_service_port}/carbon"
+  deploy_service 'mysql-greg-db' $mysql_greg_db_host_port
+  deploy_service 'wso2greg-default' $wso2greg_default_service_port
+  echoBold "wso2greg-default management console: https://${marathonlb_host_ip}:${wso2greg_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 GREG default setup on Mesos"
 }
 
