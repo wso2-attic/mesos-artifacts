@@ -23,8 +23,8 @@ mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 mysql_esb_db_host_port=10091
-wso2esb_manager_service_port=10098
-wso2esb_worker_service_port=10095
+wso2esb_manager_service_port=10095
+wso2esb_worker_service_port=10093
 wso2esb_default_service_port=10095
 
 function deploy_distributed() {

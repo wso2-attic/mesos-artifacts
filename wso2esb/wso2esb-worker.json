@@ -13,7 +13,7 @@
           "name": "hazelcast",
           "containerPort": 0,
           "hostPort": 0,
-          "servicePort": 10096,
+          "servicePort": 10097,
           "protocol": "tcp"
         },
         {
