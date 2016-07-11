@@ -25,7 +25,7 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 mysql_cep_db_host_port=10091
 # wso2cep_presenter_service_port=10093
 # wso2cep_worker_service_port=10095
-wso2cep_default_service_port=10095
+wso2cep_default_service_port=10052
 
 function deploy_distributed() {
   echoError "CEP ha/distributed deployment not supported!"
@@ -43,7 +43,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-cep-db' $mysql_cep_db_host_port
   deploy_service 'wso2cep-default' $wso2cep_default_service_port
-  echoBold "wso2cep-default management console: https://${marathonlb_host_ip}:${wso2cep_default_service_port}/carbon"
+  echoBold "wso2cep-default management console: http://${marathonlb_host_ip}:${wso2cep_default_service_port}/carbon"
   echoSuccess "Successfully deployed WSO2 CEP default setup on Mesos"
 }
 
