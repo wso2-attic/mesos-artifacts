@@ -97,14 +97,22 @@ if [ "${#wso2_docker_images[@]}" -lt 1 ]; then
   exit 1
 fi
 
+transfer_all=false
+
 for wso2_image_name in "${wso2_docker_images[@]}"
 do
   if [ "${wso2_image_name//[[:space:]]/}" != "" ]; then
     wso2_image=$(docker images $wso2_image_name | awk '{if (NR!=1) print}')
     echo -n $(echo $wso2_image | awk '{print $1 ":" $2, "(" $3 ")"}') " - "
-    askBold "Transfer? ( [y]es / [n]o / [e]xit ): "
-    read -r xfer_v
-    if [ "$xfer_v" == "y" ]; then
+
+    if !($transfer_all) ; then
+        askBold "Transfer? ( [a]yes to all [y]es / [n]o / [e]xit ): "
+        read input
+    else
+        input=y
+    fi
+
+    if [ "$input" == "y" ]; then
       image_id=$(echo $wso2_image | awk '{print $3}')
       echoDim "Saving image ${wso2_image_name}..."
       docker save ${wso2_image_name} > /tmp/$image_id.tar
@@ -139,9 +147,12 @@ do
       rm /tmp/$image_id.tar
       echoBold "Done"
 
-    elif [ "$xfer_v" == "e" ]; then
+    elif [ "$input" == "e" ]; then
       echoBold "Done"
       exit 0
+    elif [ "$input" == "a" ]; then
+      transfer_all=true
+      echoBold "All the images will be transferred."
     fi
   fi
 done
