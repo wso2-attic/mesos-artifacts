@@ -50,7 +50,12 @@
     "HAPROXY_1_GROUP": "marathon-lb",
     "HAPROXY_2_GROUP": "marathon-lb",
     "HAPROXY_3_GROUP": "marathon-lb",
-    "HAPROXY_4_GROUP": "marathon-lb"
+    "HAPROXY_4_GROUP": "marathon-lb",
+    "HAPROXY_2_BACKEND_SERVER_OPTIONS": "  server {serverName} {host_ipv4}:{port}{cookieOptions} ssl verify none \n",
+    "HAPROXY_2_BACKEND_STICKY_OPTIONS": "  cookie JSESSIONID prefix nocache \n",
+    "HAPROXY_2_STICKY": "true",
+    "HAPROXY_2_SSL_CERT": "/etc/ssl/cert.pem",
+    "HAPROXY_2_MODE": "http"
   },
   "healthChecks": [
     {
