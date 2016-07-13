@@ -93,7 +93,7 @@ fi
 wso2_docker_images=($(docker images | grep "${search_pattern}" | awk '{print $1 ":" $2}'))
 
 if [ "${#wso2_docker_images[@]}" -lt 1 ]; then
-  echo "No Docker images with name \"wso2\" found."
+  echo "No Docker images with name \"${search_pattern}\" found."
   exit 1
 fi
 
