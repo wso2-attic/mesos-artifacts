@@ -31,11 +31,6 @@
       ]
     }
   },
-  "healthChecks": [
-    {
-      "portIndex": 1
-    }
-  ],
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
   },
@@ -47,5 +42,10 @@
     "HAPROXY_2_STICKY": "true",
     "HAPROXY_2_SSL_CERT": "/etc/ssl/cert.pem",
     "HAPROXY_2_MODE": "http"
-  }
+  },
+  "healthChecks": [
+    {
+      "portIndex": 1
+    }
+  ]
 }
