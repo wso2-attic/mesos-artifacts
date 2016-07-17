@@ -6,29 +6,29 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-        "image": "wso2greg-mesos:5.1.0",
-        "network": "BRIDGE",
-        "portMappings": [
-          {
-            "name": "hazelcast",
-            "containerPort": 0,
-            "hostPort": 0,
-            "servicePort": 10104,
-            "protocol": "tcp"
-          },
-          {
-            "name": "servlet-http",
-            "containerPort": 9763,
-            "servicePort": 10102,
-            "protocol": "tcp"
-          },
-          {
-            "name": "servlet-https",
-            "containerPort": 9443,
-            "servicePort": 10103,
-            "protocol": "tcp"
-          }
-        ]
+      "image": "wso2greg-mesos:5.1.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "name": "hazelcast",
+          "containerPort": 0,
+          "hostPort": 0,
+          "servicePort": 10104,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-http",
+          "containerPort": 9763,
+          "servicePort": 10102,
+          "protocol": "tcp"
+        },
+        {
+          "name": "servlet-https",
+          "containerPort": 9443,
+          "servicePort": 10103,
+          "protocol": "tcp"
+        }
+      ]
     }
   },
   "env": {

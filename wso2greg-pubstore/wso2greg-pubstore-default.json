@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "wso2greg_pubstore-mesos:5.1.0",
+      "image": "wso2greg-pubstore-mesos:5.1.0",
       "network": "BRIDGE",
       "portMappings": [
         {
