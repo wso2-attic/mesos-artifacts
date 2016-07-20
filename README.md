@@ -12,10 +12,10 @@ To deploy a WSO2 product on Mesos DC/OS, follow the below steps:
 * If a central Docker registry is used, update Docker image tags accordingly in WSO2 Marathon applications.
 * Run `deploy.sh` inside the relevant product folder. This will deploy following containers:
    * Marathon load balancer container
-   * Registry database containers
+   * Registry database container
    * User management database container
-   * Product specific database containers
-   * Product profile containers
+   * Product specific database container
+   * Product profile container
 
 >In the context of this document, `MESOS_HOME`, `DOCKERFILES_HOME` and `PUPPET_HOME` will refer to local copies of [`wso2/mesos-artifacts`](https://github.com/wso2/mesos-artifacts/), [`wso2/dockcerfiles`](https://github.com/wso2/dockerfiles/) and [`wso2/puppet-modules`](https://github.com/wso2/puppet-modules) repositories respectively.
 
@@ -30,12 +30,12 @@ Building WSO2 Docker images using Puppet for Mesos:
   3. If WSO2 product is based on Carbon Kernel versions 4.2.0 and 4.4.1, add relevant Kernel patches for clustering to `PUPPET_HOME/modules/<product>/files/configs/repository/components/patches` location.
      - For Carbon Kernel version 4.2.0 based products, add Kernel patches [upto patch0012](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/carbon/WSO2-CARBON-PATCH-4.2.0/) which are not present there in product pack.
      - For Carbon Kernel version 4.4.1 based products, add Kernel patch [patch0005](http://product-dist.wso2.com/downloads/carbon/4.4.1/patch0005/WSO2-CARBON-PATCH-4.4.1-0005.zip)
-  3. Copy the JDK [`jdk-7u80-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) to `PUPPET_HOME/modules/wso2base/files` location.
-  4. Copy the [`mysql-connector-java-5.1.36-bin.jar`](http://mvnrepository.com/artifact/mysql/mysql-connector-java/5.1.36) file to `PUPPET_HOME/modules/<product>/files/configs/repository/components/lib` location.
-  5. Copy the product zip file to `PUPPET_HOME/modules/wso2{product}/files` location.
-  6. Set the environment variable `PUPPET_HOME` pointing to location of the puppet modules in local machine.
-  7. Navigate to the relevant product directory in the dockerfiles repository; `DOCKERFILES_HOME/<product>`.
-  8. Build the Dockerfile with the following command:
+  4. Copy the JDK [`jdk-7u80-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) to `PUPPET_HOME/modules/wso2base/files` location.
+  5. Copy the [`mysql-connector-java-5.1.36-bin.jar`](http://mvnrepository.com/artifact/mysql/mysql-connector-java/5.1.36) file to `PUPPET_HOME/modules/<product>/files/configs/repository/components/lib` location.
+  6. Copy the product zip file to `PUPPET_HOME/modules/wso2{product}/files` location.
+  7. Set the environment variable `PUPPET_HOME` pointing to location of the puppet modules in local machine.
+  8. Navigate to the relevant product directory in the dockerfiles repository; `DOCKERFILES_HOME/<product>`.
+  9. Build the Dockerfile with the following command:
 
     **`./build.sh -v [product-version] -s mesos -r puppet`**
 

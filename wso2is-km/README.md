@@ -25,12 +25,12 @@ Building WSO2 Identity Server Key Manager Docker images using Puppet for Mesos:
   1. Clone `wso2/puppet-modules` and `wso2/dockerfiles` repositories (alternatively you can download the released artifacts using the release page of the GitHub repository).
   2. Copy the Mesos membership scheme jar file to `PUPPET_HOME/modules/wso2is_km/files/configs/repository/components/dropins` location.
   3. Copy  Kernel patch [`patch0005`](http://product-dist.wso2.com/downloads/carbon/4.4.1/patch0005/WSO2-CARBON-PATCH-4.4.1-0005.zip) for clustering to `PUPPET_HOME/modules/wso2is_km/files/patches/repository/components/patches` folder.
-  3. Copy the JDK [`jdk-7u80-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) to `PUPPET_HOME/modules/wso2base/files` location.
-  4. Copy the [`mysql-connector-java-5.1.36-bin.jar`](http://mvnrepository.com/artifact/mysql/mysql-connector-java/5.1.36) file to `PUPPET_HOME/modules/wso2is_km/files/configs/repository/components/lib` location.
-  5. Get the WSO2 Identity Server 5.1.0 product distribution which has Key Manager feature installed, and copy it to `PUPPET_HOME/modules/wso2is_km/files` location. If you are using the pre-packaged [WSO2 Identity Server 5.1.0 Key Manager pack](http://product-dist.wso2.com/downloads/api-manager/1.10.0/identity-server/wso2is-5.1.0.zip), extract the product zip file, remove the `.manager` hidden folder in `wso2is/repository/components/default/configuration/org.eclipse.osgi`, compress it as zip file and copy to `PUPPET_HOME/modules/wso2is_km/files` location.
-  6. Set the environment variable `PUPPET_HOME` pointing to location of the puppet modules in local machine.
-  7. Navigate to `wso2is-km` directory in the Dockerfiles repository; `DOCKERFILES_HOME/wso2is-km`.
-  8. Build the Dockerfile with the following command:
+  4. Copy the JDK [`jdk-7u80-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) to `PUPPET_HOME/modules/wso2base/files` location.
+  5. Copy the [`mysql-connector-java-5.1.36-bin.jar`](http://mvnrepository.com/artifact/mysql/mysql-connector-java/5.1.36) file to `PUPPET_HOME/modules/wso2is_km/files/configs/repository/components/lib` location.
+  6. Get the WSO2 Identity Server 5.1.0 product distribution which has Key Manager feature installed, and copy it to `PUPPET_HOME/modules/wso2is_km/files` location. If you are using the pre-packaged [WSO2 Identity Server 5.1.0 Key Manager pack](http://product-dist.wso2.com/downloads/api-manager/1.10.0/identity-server/wso2is-5.1.0.zip), extract the product zip file, remove the `.manager` hidden folder in `wso2is/repository/components/default/configuration/org.eclipse.osgi`, compress it as zip file and copy to `PUPPET_HOME/modules/wso2is_km/files` location.
+  7. Set the environment variable `PUPPET_HOME` pointing to location of the puppet modules in local machine.
+  8. Navigate to `wso2is-km` directory in the Dockerfiles repository; `DOCKERFILES_HOME/wso2is-km`.
+  9. Build the Dockerfile with the following command:
 
     **`./build.sh -v 5.1.0 -s mesos -r puppet`**
 
