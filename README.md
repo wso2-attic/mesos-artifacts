@@ -19,7 +19,7 @@ To deploy a WSO2 product on Mesos DC/OS, follow the below steps:
 
 >In the context of this document, `MESOS_HOME`, `DOCKERFILES_HOME` and `PUPPET_HOME` will refer to local copies of [`wso2/mesos-artifacts`](https://github.com/wso2/mesos-artifacts/), [`wso2/dockcerfiles`](https://github.com/wso2/dockerfiles/) and [`wso2/puppet-modules`](https://github.com/wso2/puppet-modules) repositories respectively.
 
-##### 1. Build Docker Images
+#### 1. Build Docker Images
 
 To manage configurations and artifacts when building Docker images, WSO2 recommends to use [`wso2/puppet-modules`](https://github.com/wso2/puppet-modules) as the provisioning method. A specific data set for Mesos platform is available in WSO2 Puppet Modules. It's possible to use this data set to build Dockerfiles for wso2 products for Mesos with minimum configuration changes.
 
@@ -43,7 +43,7 @@ Building WSO2 Docker images using Puppet for Mesos:
 
   This will build the standalone product for Mesos platform, using configuration specified in Puppet. Please note it's possible to build relevant profiles of the products similarly. Refer `build.sh` script usage (`./build.sh -h`).
 
-##### 2. Load the Docker Images to Mesos slave nodes/ Import them to Central Docker Registry
+#### 2. Load the Docker Images to Mesos slave nodes/ Import them to Central Docker Registry
 
 Load the required Docker images to Mesos slave nodes(ex: use `docker save` to create a tarball of the required image, `scp` the tarball to each node, and use `docker load` to reload the images from the copied tarballs on the nodes). Alternatively, if a private Docker registry is used, transfer the images there.
 
@@ -67,7 +67,7 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
 ```
 
 
-##### 3. Deploy WSO2 Product on Mesos DC/OS
+#### 3. Deploy WSO2 Product on Mesos DC/OS
   1. Navigate to relevant product directory in mesos-artifacts repository; `MESOS_HOME/<product>` location.
   2. run the deploy.sh script:
 
@@ -75,10 +75,11 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
 
       This will deploy the standalone product in Mesos DC/OS, using the image available in Mesos slave nodes, and notify once the intended Marathon application starts running on the container. Additionally if `-d` flag is provided when running `deploy.sh`, it will deploy the product's distributed setup.
 
-##### 4. Access Management Console
-  Access the Carbon Management Console URL using `https://<marathon-lb-host-ip>:<service-port>/carbon/`
+#### 4. Access Management Console
+  1. Add a host entry (in Linux, using the `/etc/hosts` file) for Marathon LB Hostname `marathon-lb.marathon.mesos`, resolving to Marathon LB Host IP.
+  2. Access the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:<product-specific-service-port>/carbon/`
 
-##### 5. Undeploy WSO2 Product from Mesos DC/OS
+#### 5. Undeploy WSO2 Product from Mesos DC/OS
   1. Navigate to relevant product directory in mesos-artifacts repository; `MESOS_HOME/<product>` location.
   2. run the `undeploy.sh` script:
 

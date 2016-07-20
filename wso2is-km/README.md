@@ -70,9 +70,10 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
       This will deploy the WSO2 Identity Server Key Manager 5.1.0 default profile in Mesos DC/OS, using the image available in Mesos slave nodes, and notify once the intended Marathon application `wso2is-km-default` starts running on the container.
 
 #### 4. Access Management Console
-  Access the Carbon Management Console URL using `https://<marathon-lb-host-ip>:<service-port>/carbon/`
+  1. Add a host entry (in Linux, using the `/etc/hosts` file) for Marathon LB Hostname `marathon-lb.marathon.mesos`, resolving to Marathon LB Host IP.
+  2. Access the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:10143/carbon/`
 
-#### 5. Undeploying
+#### 5. Undeploy WSO2 Product from Mesos DC/OS
   1. Navigate to `wso2is-km` directory in mesos-artifacts repository; `MESOS_HOME/wso2is-km` location.
   2. run the `undeploy.sh` script:
 
