@@ -1,157 +1,95 @@
 {
   "id": "wso2das-default",
   "cpus": 0.5,
-  "mem": 2048,
+  "mem": 1024,
   "instances": 1,
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "wso2das-mesos:3.0.1",
-      "network": "BRIDGE",
-      "portMappings": [
-        {
-          "name": "hazelcast",
-          "servicePort": 10068,
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "servlet-http",
-          "containerPort": 9763,
-          "servicePort": 10062,
-          "protocol": "tcp"
-        },
-        {
-          "name": "servlet-https",
-          "containerPort": 9443,
-          "servicePort": 10063,
-          "protocol": "tcp"
-        },
-        {
-          "name": "thrift",
-          "containerPort": 7611,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "thrift-ssl",
-          "containerPort": 7711,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-ui",
-          "containerPort": 0,
-          "servicePort": 10064,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-history-ui",
-          "containerPort": 0,
-          "servicePort": 10065,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-block-manager",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-broadcast",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-driver",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-executor",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-fileserver",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-repl-class-server",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-master",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-master-rest",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-master-webui",
-          "containerPort": 0,
-          "servicePort": 10066,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-worker",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "spark-worker-webui",
-          "containerPort": 0,
-          "servicePort": 10067,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "event-sync",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        },
-        {
-          "name": "management",
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp"
-        }
-      ]
+      "network": "HOST"
     }
   },
+  "portDefinitions": [
+    {
+      "name": "hazelcast",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "servlet-http",
+      "port": 9763,
+      "protocol": "tcp"
+    },
+    {
+      "name": "servlet-https",
+      "port": 9443,
+      "protocol": "tcp"
+    },
+    {
+      "name": "thrift",
+      "port": 7611,
+      "protocol": "tcp"
+    },
+    {
+      "name": "thrift-ssl",
+      "port": 7711,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-ui",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "event-sync",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "management",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "presentation",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-master-webui",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-worker-webui",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-master-port",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-driver-port",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-worker-port",
+      "port": 0,
+      "protocol": "tcp"
+    },
+    {
+      "name": "spark-executor-port",
+      "port": 0,
+      "protocol": "tcp"
+    }
+  ],
+  "requirePorts": true,
   "env": {
     "KEY_STORE_PASSWORD": "wso2carbon"
-  },
-  "labels": {
-    "HAPROXY_1_GROUP": "marathon-lb",
-    "HAPROXY_2_GROUP": "marathon-lb",
-    "HAPROXY_5_GROUP": "marathon-lb",
-    "HAPROXY_6_GROUP": "marathon-lb",
-    "HAPROXY_15_GROUP": "marathon-lb",
-    "HAPROXY_17_GROUP": "marathon-lb",
-    "HAPROXY_2_BACKEND_SERVER_OPTIONS": "  server {serverName} {host_ipv4}:{port}{cookieOptions} ssl verify none \n",
-    "HAPROXY_2_BACKEND_STICKY_OPTIONS": "  cookie JSESSIONID prefix nocache \n",
-    "HAPROXY_2_STICKY": "true",
-    "HAPROXY_2_SSL_CERT": "/etc/ssl/cert.pem",
-    "HAPROXY_2_MODE": "http"
   },
   "healthChecks": [
     {
