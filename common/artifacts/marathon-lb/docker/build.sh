@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ------------------------------------------------------------------------
 #
 # Copyright 2016 WSO2, Inc. (http://wso2.com)
@@ -17,39 +17,4 @@
 
 # ------------------------------------------------------------------------
 
-set -e
-self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-mesos_artifacts_home="${self_path}/.."
-source "${mesos_artifacts_home}/common/scripts/base.sh"
-
-function undeploy_product() {
-  undeploy wso2cep-default
-  # undeploy wso2cep-worker
-  # undeploy wso2cep-presenter
-  undeploy mysql-cep-db
-}
-
-function full_purge() {
-  undeploy_product
-  undeploy_common_services
-}
-
-function main() {
-  full_purge=false
-  while getopts :f FLAG; do
-      case $FLAG in
-          f)
-              full_purge=true
-              ;;
-      esac
-  done
-
-  if [[ $full_purge == true ]]; then
-    echo "Purging WSO2 CEP deployment..."
-    full_purge
-  else
-    echo "Undeploying WSO2 CEP product..."
-    undeploy_product
-  fi
-}
-main "$@"
+docker build --no-cache=true -t wso2/marathon-lb:v1.3.1 ./

@@ -18,41 +18,8 @@
 # ------------------------------------------------------------------------
 
 set -e
-self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-mesos_artifacts_home="${self_path}/.."
+self_path=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)
+mesos_artifacts_home="${self_path}/../../.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-function undeploy_product() {
-  undeploy wso2am-default
-  undeploy wso2am-api-key-manager
-  undeploy wso2am-api-publisher
-  undeploy wso2am-api-store
-  undeploy wso2am-gateway-manager
-  undeploy wso2am-gateway-worker
-  undeploy mysql-apim-db
-}
-
-function full_purge() {
-  undeploy_product
-  undeploy_common_services
-}
-
-function main() {
-  full_purge=false
-  while getopts :f FLAG; do
-      case $FLAG in
-          f)
-              full_purge=true
-              ;;
-      esac
-  done
-
-  if [[ $full_purge == true ]]; then
-    echo "Purging WSO2 AM deployment..."
-    full_purge
-  else
-    echo "Undeploying WSO2 AM product..."
-    undeploy_product
-  fi
-}
-main "$@"
+undeploy svn

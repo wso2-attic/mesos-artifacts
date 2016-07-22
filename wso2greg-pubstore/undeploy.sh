@@ -30,8 +30,7 @@ undeploy mysql-greg-db
 
 function full_purge() {
   undeploy_product
-  bash ${self_path}/../common/wso2-shared-dbs/undeploy.sh
-  bash ${self_path}/../common/marathon-lb/undeploy.sh
+  undeploy_common_services
 }
 
 function main() {

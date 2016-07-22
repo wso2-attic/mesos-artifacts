@@ -1,4 +1,3 @@
-#!/bin/bash
 # ------------------------------------------------------------------------
 #
 # Copyright 2016 WSO2, Inc. (http://wso2.com)
@@ -17,10 +16,10 @@
 
 # ------------------------------------------------------------------------
 
-set -e
-self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-mesos_artifacts_home="${self_path}/../.."
-source "${mesos_artifacts_home}/common/scripts/base.sh"
+FROM mesosphere/marathon-lb:v1.3.1
 
-undeploy mysql-gov-db
-undeploy mysql-user-db
+COPY run /marathon-lb
+COPY wso2demo.pem /etc/ssl/
+COPY templates/* /marathon-lb/templates
+
+WORKDIR /marathon-lb

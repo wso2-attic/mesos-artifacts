@@ -19,40 +19,20 @@
 
 set -e
 self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-mesos_artifacts_home="${self_path}/.."
+mesos_artifacts_home="${self_path}/../../.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
+mysql_gov_db_host_port=10000
+mysql_user_db_host_port=10001
 
-function undeploy_product() {
-  undeploy wso2am-default
-  undeploy wso2am-api-key-manager
-  undeploy wso2am-api-publisher
-  undeploy wso2am-api-store
-  undeploy wso2am-gateway-manager
-  undeploy wso2am-gateway-worker
-  undeploy mysql-apim-db
-}
+echo "Deploying WSO2 shared databases..."
 
-function full_purge() {
-  undeploy_product
-  undeploy_common_services
-}
+deploy_gov_db="deploy mysql-gov-db ${self_path}/mysql-gov-db.json"
+deploy_user_db="deploy mysql-user-db ${self_path}/mysql-user-db.json"
 
-function main() {
-  full_purge=false
-  while getopts :f FLAG; do
-      case $FLAG in
-          f)
-              full_purge=true
-              ;;
-      esac
-  done
-
-  if [[ $full_purge == true ]]; then
-    echo "Purging WSO2 AM deployment..."
-    full_purge
-  else
-    echo "Undeploying WSO2 AM product..."
-    undeploy_product
-  fi
-}
-main "$@"
+if ! ($deploy_gov_db && $deploy_user_db); then
+  echoError "Failed to deploy WSO2 shared databases"
+  exit 1
+fi
+waitUntilServiceIsActive 'mysql-gov-db'
+waitUntilServiceIsActive 'mysql-user-db'
+echoSuccess "Successfully deployed WSO2 shared databases"

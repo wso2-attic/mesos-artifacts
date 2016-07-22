@@ -70,7 +70,7 @@
     "HAPROXY_2_BACKEND_SERVER_OPTIONS": "  server {serverName} {host_ipv4}:{port}{cookieOptions} ssl verify none \n",
     "HAPROXY_2_BACKEND_STICKY_OPTIONS": "  cookie JSESSIONID prefix nocache \n",
     "HAPROXY_2_STICKY": "true",
-    "HAPROXY_2_SSL_CERT": "/etc/ssl/cert.pem",
+    "HAPROXY_2_SSL_CERT": "/etc/ssl/wso2demo.pem",
     "HAPROXY_2_MODE": "http"
   },
   "healthChecks": [
