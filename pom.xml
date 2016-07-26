@@ -129,6 +129,10 @@
 
     <modules>
         <module>common/mesos-membership-scheme</module>
+        <module>wso2am</module>
+        <module>wso2as</module>
+        <module>wso2bps</module>
+        <module>wso2brs</module>
     </modules>
 
     <build>
@@ -145,6 +149,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <inherited>true</inherited>
                 <version>${maven.assembly.plugin.version}</version>
                 <configuration>
                     <descriptor>package.xml</descriptor>
@@ -315,7 +320,7 @@
         <gson.version>2.3</gson.version>
         <slf4j.api.version>1.6.1</slf4j.api.version>
         <maven.compiler.plugin.version>2.3.1</maven.compiler.plugin.version>
-        <maven.assembly.plugin.version>2.5.1</maven.assembly.plugin.version>
+        <maven.assembly.plugin.version>2.5.3</maven.assembly.plugin.version>
         <testng.version>6.9.9</testng.version>
         <carbon.platform.imp.pkg.version.range>[4.2.0, 4.5.0)</carbon.platform.imp.pkg.version.range>
         <axis2.imp.pkg.version.range>[1.6.1.wso2v10, 2.0.0)</axis2.imp.pkg.version.range>
