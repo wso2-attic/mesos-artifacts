@@ -94,4 +94,4 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
 For more detailed instructions on deploying WSO2 Data Services Server on Mesos DC/OS, please refer the wiki links under the Documentation section below.
 
 # Documentation
-* [WSO2 Mesos Artifacts Wiki](https://docs.wso2.com/display/MA100/WSO2+Mesos+Artifacts+Documentation)
+* [WSO2 Mesos Artifacts Wiki](https://docs.wso2.com/display/MA100/Home)
