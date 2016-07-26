@@ -20,3 +20,6 @@ To deploy a WSO2 product on Mesos DC/OS, follow the below steps:
 >In the context of this document, `MESOS_HOME`, `DOCKERFILES_HOME` and `PUPPET_HOME` will refer to local copies of [`wso2/mesos-artifacts`](https://github.com/wso2/mesos-artifacts/), [`wso2/dockcerfiles`](https://github.com/wso2/dockerfiles/) and [`wso2/puppet-modules`](https://github.com/wso2/puppet-modules) repositories respectively.
 
 ![Overview](overview.jpg)
+
+## Documentation
+* [WSO2 Mesos Artifacts Wiki](https://docs.wso2.com/display/MA100/Home)
