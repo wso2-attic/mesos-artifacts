@@ -15,8 +15,7 @@
 ~ limitations under the License.
 ~
 -->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -28,7 +27,7 @@
     <groupId>org.wso2.carbon.mesos.artifacts</groupId>
     <artifactId>wso2-mesos-artifacts</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>WSO2 Mesos Artifacts</name>
     <description>WSO2 artifacts for deploying services on Apache Mesos platform</description>
 
@@ -124,7 +123,7 @@
         <url>https://github.com/wso2/mesos-artifacts.git</url>
         <developerConnection>scm:git:https://github.com/wso2/mesos-artifacts.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/mesos-artifacts.git</connection>
-        <tag>HEAD</tag>
+        <tag>v1.0.0</tag>
     </scm>
 
     <modules>
@@ -203,7 +202,7 @@
                                 <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
                                     <licenseFamilyCategory>WSO2</licenseFamilyCategory>
                                     <licenseFamilyName>WSO2 License 1.0</licenseFamilyName>
-                                    <notes/>
+                                    <notes />
                                     <patterns>
                                         <pattern>Copyright WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
                                         </pattern>
