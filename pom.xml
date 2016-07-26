@@ -19,18 +19,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.wso2</groupId>
+        <artifactId>wso2</artifactId>
+        <version>2</version>
+    </parent>
+
     <groupId>org.wso2.mesos</groupId>
     <artifactId>wso2-mesos-artifacts</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <name>WSO2 Mesos Artifacts</name>
     <description>WSO2 artifacts for deploying services on Apache Mesos platform</description>
-
-    <!--parent>
-        <groupId>org.wso2</groupId>
-        <artifactId>wso2</artifactId>
-        <version>3</version>
-    </parent-->
 
     <licenses>
         <license>
@@ -68,57 +68,67 @@
     </modules>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compiler.plugin.version}</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-scr-plugin</artifactId>
-                    <version>${maven.scr.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>generate-scr-scrdescriptor</id>
-                            <goals>
-                                <goal>scr</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>${maven.bundle.plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <obrRepository>NONE</obrRepository>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven.assembly.plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven.surefire.plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven.dependency.plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+                <version>${maven.scr.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-scr-scrdescriptor</id>
+                        <goals>
+                            <goal>scr</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven.bundle.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <obrRepository>NONE</obrRepository>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven.dependency.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly.plugin.version}</version>
+                <configuration>
+                    <descriptor>package.xml</descriptor>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>
