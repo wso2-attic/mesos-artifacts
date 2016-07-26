@@ -24,7 +24,7 @@ source "${mesos_artifacts_home}/common/scripts/base.sh"
 
 wso2_das_marathon_app_id=wso2das-default
 mysql_das_db_host_port=10061
-wso2das_default_service_port=9763
+wso2das_default_service_port=9443
 wso2das_thrift_port=7611
 wso2das_secure_thrift_port=7711
 
@@ -33,7 +33,7 @@ function deploy_default() {
   deploy_common_services
   deploy_service 'mysql-das-db' $mysql_das_db_host_port
   deploy_service 'wso2das-default' $wso2das_default_service_port
-  echoBold "wso2das-default management console: http://${marathonlb_host_ip}:${wso2das_default_service_port}/carbon"
+  echoBold "wso2das-default management console: https://${marathonlb_host_ip}:${wso2das_default_service_port}/carbon"
   echoBold "wso2das-default thrift endpoint: tcp://${wso2_das_marathon_app_id}.marathon.mesos:${wso2das_thrift_port}"
   echoBold "wso2das-default thrift secure endpoint: tcp://${wso2_das_marathon_app_id}.marathon.mesos:${wso2das_secure_thrift_port}"
   echoSuccess "Successfully deployed WSO2 DAS default setup on Mesos"

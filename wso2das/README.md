@@ -70,7 +70,7 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
        
 #### 4. Login to WSO2 Data Analytics Server Management Console
   1. Add a host entry (in Linux, using the `/etc/hosts` file) for Marathon LB Hostname `marathon-lb.marathon.mesos`, resolving to Marathon LB Host IP.
-  2. Login to the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:9763/carbon/`.
+  2. Login to the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:9443/carbon/`.
  
 #### 5. Undeploy WSO2 Data Analytics Server from Mesos DC/OS
   1. Navigate to `wso2das` directory in mesos-artifacts repository; `MESOS_HOME/wso2das` location.
