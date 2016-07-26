@@ -33,7 +33,7 @@ Building WSO2 API Manager Docker image using Puppet for Mesos:
   
   
 
-#### 2. Load the Docker Images to Mesos slave nodes/ Import them to Central Docker Registry
+#### 2. Load the Docker Images to Mesos slave nodes or import them to Central Docker Registry
 
 Load the required Docker images to Mesos slave nodes(ex: use `docker save` to create a tarball of the required image, `scp` the tarball to each node, and use `docker load` to reload the images from the copied tarballs on the nodes). Alternatively, if a private Docker registry is used, transfer the images there.
 
@@ -87,7 +87,7 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
   2. Login to the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:10203/carbon/`
   
     In a distributed deployment, use below URLs to login:
-       * WSO2 API Manager key Manager       - `https://marathon-lb.marathon.mesos:10206/carbon/`
+       * WSO2 API Manager Key Manager       - `https://marathon-lb.marathon.mesos:10205/carbon/`
        * WSO2 API Manager Store             - `https://marathon-lb.marathon.mesos:10209/store/`
        * WSO2 API Manager Publisher         - `https://marathon-lb.marathon.mesos:10207/publisher/`
        * WSO2 API Manager Gateway Manager   - `https://marathon-lb.marathon.mesos:10213/carbon/`

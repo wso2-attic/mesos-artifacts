@@ -30,7 +30,7 @@ Building WSO2 Governance Registry Publisher Store Docker image using Puppet for 
     This will build the default profile of WSO2 Governance Registry Publisher Store for Mesos platform, using configuration specified in Puppet.
   
 
-#### 2. Load the Docker Images to Mesos slave nodes/ Import them to Central Docker Registry
+#### 2. Load the Docker Images to Mesos slave nodes or import them to Central Docker Registry
 
 Load the required Docker images to Mesos slave nodes(ex: use `docker save` to create a tarball of the required image, `scp` the tarball to each node, and use `docker load` to reload the images from the copied tarballs on the nodes). Alternatively, if a private Docker registry is used, transfer the images there.
 
