@@ -21,13 +21,13 @@
     <parent>
         <groupId>org.wso2.carbon.mesos.artifacts</groupId>
         <artifactId>wso2-mesos-artifacts</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>wso2mb-mesos-artifacts</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>WSO2 Message Broker Mesos Artifacts</name>
 
     <properties>

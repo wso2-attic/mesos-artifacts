@@ -27,7 +27,7 @@
     <groupId>org.wso2.carbon.mesos.artifacts</groupId>
     <artifactId>wso2-mesos-artifacts</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>WSO2 Mesos Artifacts</name>
     <description>WSO2 artifacts for deploying services on Apache Mesos platform</description>
 
@@ -123,7 +123,7 @@
         <url>https://github.com/wso2/mesos-artifacts.git</url>
         <developerConnection>scm:git:https://github.com/wso2/mesos-artifacts.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/mesos-artifacts.git</connection>
-        <tag>v1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <modules>
