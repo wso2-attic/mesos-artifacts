@@ -22,12 +22,12 @@ self_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 mesos_artifacts_home="${self_path}/.."
 source "${mesos_artifacts_home}/common/scripts/base.sh"
 
-wso2am_default_service_port=10202
-wso2am_api_key_manager_service_port=10204
-wso2am_api_publisher_service_port=10206
-wso2am_api_store_service_port=10208
-wso2am_gateway_manager_service_port=10212
-wso2am_gateway_worker_service_port=10216
+wso2am_default_service_port=10203
+wso2am_api_key_manager_service_port=10205
+wso2am_api_publisher_service_port=10207
+wso2am_api_store_service_port=10209
+wso2am_gateway_manager_service_port=10213
+wso2am_gateway_worker_service_port=10217
 mysql_apim_db_host_port=10006
 
 function deploy_distributed() {
@@ -35,13 +35,13 @@ function deploy_distributed() {
   deploy_common_services
   deploy_service 'mysql-apim-db' $mysql_apim_db_host_port
   deploy_service 'wso2am-api-key-manager' $wso2am_api_key_manager_service_port
-  echoBold "wso2am-api-key-manager management console: http://${marathonlb_host_ip}:${wso2am_api_key_manager_service_port}/carbon"
+  echoBold "wso2am-api-key-manager management console: https://${marathonlb_host_ip}:${wso2am_api_key_manager_service_port}/carbon"
   deploy_service 'wso2am-api-store' $wso2am_api_store_service_port
-  echoBold "wso2am-api-store management console: http://${marathonlb_host_ip}:${wso2am_api_store_service_port}/store"
+  echoBold "wso2am-api-store management console: https://${marathonlb_host_ip}:${wso2am_api_store_service_port}/store"
   deploy_service 'wso2am-api-publisher' $wso2am_api_publisher_service_port
-  echoBold "wso2am-api-publisher management console: http://${marathonlb_host_ip}:${wso2am_api_publisher_service_port}/publisher"
+  echoBold "wso2am-api-publisher management console: https://${marathonlb_host_ip}:${wso2am_api_publisher_service_port}/publisher"
   deploy_service 'wso2am-gateway-manager' $wso2am_gateway_manager_service_port
-  echoBold "wso2am-gateway-manager management console: http://${marathonlb_host_ip}:${wso2am_gateway_manager_service_port}/carbon"
+  echoBold "wso2am-gateway-manager management console: https://${marathonlb_host_ip}:${wso2am_gateway_manager_service_port}/carbon"
   # deploy_service 'wso2am-gateway-worker' $wso2am_gateway_worker_service_port
   # echoSuccess "Successfully deployed WSO2 APIM distributed cluster on Mesos"
 }

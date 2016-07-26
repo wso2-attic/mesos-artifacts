@@ -84,13 +84,13 @@ Ex: ./load-images.sh -u centos -p wso2is -k /home/ssh_key.pem
 
 #### 4. Login to WSO2 API Manager Management Console
   1. Add a host entry (in Linux, using the `/etc/hosts` file) for Marathon LB Hostname `marathon-lb.marathon.mesos`, resolving to Marathon LB Host IP.
-  2. Login to the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:10202/carbon/`
+  2. Login to the Carbon Management Console URL using `https://marathon-lb.marathon.mesos:10203/carbon/`
   
     In a distributed deployment, use below URLs to login:
-       * WSO2 API Manager key Manager       - `https://marathon-lb.marathon.mesos:10204/carbon/`
-       * WSO2 API Manager Store             - `https://marathon-lb.marathon.mesos:10208/store/`
-       * WSO2 API Manager Publisher         - `https://marathon-lb.marathon.mesos:10206/publisher/`
-       * WSO2 API Manager Gateway Manager   - `https://marathon-lb.marathon.mesos:10212/carbon/`
+       * WSO2 API Manager key Manager       - `https://marathon-lb.marathon.mesos:10206/carbon/`
+       * WSO2 API Manager Store             - `https://marathon-lb.marathon.mesos:10209/store/`
+       * WSO2 API Manager Publisher         - `https://marathon-lb.marathon.mesos:10207/publisher/`
+       * WSO2 API Manager Gateway Manager   - `https://marathon-lb.marathon.mesos:10213/carbon/`
  
 #### 5. Undeploy WSO2 API Manager from Mesos DC/OS
   1. Navigate to `wso2am` directory in mesos-artifacts repository; `MESOS_HOME/wso2am` location.
