@@ -1,7 +1,7 @@
 {
   "id": "wso2das-default",
-  "cpus": 0.5,
-  "mem": 1024,
+  "cpus": 1.0,
+  "mem": 2048,
   "instances": 1,
   "container": {
     "type": "DOCKER",
