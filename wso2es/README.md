@@ -2,10 +2,6 @@
 
 These Mesos Artifacts provide the resources and instructions to deploy WSO2 Enterprise Store on Mesos DC/OS.
 
-# Mesos Artifacts for WSO2 Enterprise Store
-
-These Mesos Artifacts provide the resources and instructions to deploy WSO2 Enterprise Store on Mesos DC/OS.
-
 ## Getting Started
 
 >In the context of this document, `MESOS_HOME`, `DOCKERFILES_HOME` and `PUPPET_HOME` will refer to local copies of [`wso2/mesos-artifacts`](https://github.com/wso2/mesos-artifacts/), [`wso2/dockcerfiles`](https://github.com/wso2/dockerfiles/) and [`wso2/puppet-modules`](https://github.com/wso2/puppet-modules) repositories respectively.
